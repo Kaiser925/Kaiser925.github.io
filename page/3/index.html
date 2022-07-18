@@ -179,6 +179,46 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/post/go-append-tip.html" target="_self">
+          Go append 的小技巧
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/post/go-append-tip.html" target="_self">
+          
+          在开发的过程中，遇到了一个需要将 T 类型切片映射为 F 类型切片的操作，由于 Go 的标准库中并没有内置 Map 函数，于是就写了一个简单的辅助函数。 第一版是这样的 123456789101112131415161718var ts &#x3D; []struct &amp;#123;	Foo int&amp;#125; &amp;#123;		&amp;#123;			Foo: 1,		&amp;#125;,		&amp;#123;			Foo:
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-02-04 15:31" pubdate>
+              2021-02-04
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/post/how-do-I-write-program..html" target="_self">
           我是如何写程序的
         </a>
@@ -526,46 +566,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/post/go-concurrency-pipeline.html" target="_self">
-          Go 的一种并发模式：管道
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/post/go-concurrency-pipeline.html" target="_self">
-          
-          Go 管道模式开始这片文章是看完 Golang 官方博客后写下，记录下。原文在这里 首先是 What is pipeline？官方博客上将管道看作是并发的程序的一种。一系列的 stage 通过 channel 串联起来。其中，每个 stage 都是一组执行相同任务的 goroutine。在每个 Stage 中，每个 goroutine 都会做三件事情：  通过一个 channel 接收到要处理的上
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-09 22:40" pubdate>
-              2020-01-09
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Go/">Go</a>
             
           </div>
         
