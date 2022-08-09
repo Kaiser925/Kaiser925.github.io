@@ -179,6 +179,46 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/post/time-format-of-go.html" target="_self">
+          Go 的时间格式
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/post/time-format-of-go.html" target="_self">
+          
+          在 Go 中如果你需要解析一个自定义的时间字符串，将其转化为 Go 的 time.Time 类型，或者格式化的输出时间，那么你需要定义一个 layout。 在这一步就会容易出现错误，不同于其他语言以形如 yyyy-MM-dd HH:mm:ss 的格式解析，Go 是以一个特定的时间来确定格式, 即 **2006-01-02T15:04:05Z07:00**。 因此，如果你需要使用 Go 来解析一个时
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-14 16:33" pubdate>
+              2021-12-14
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/post/nginx-basic-auth.html" target="_self">
           Nginx 配置 HTTP Basic Auth
         </a>
@@ -528,46 +568,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Go/">Go</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/post/generate-private-key-for-jwt.html" target="_self">
-          为 JWT 生成私钥
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/post/generate-private-key-for-jwt.html" target="_self">
-          
-          今天在写一个登录鉴权的接口，用到了 JWT，JWT 的签名与认证需要用到一对公私钥。所以需要在本地生成一对密钥。 方法很简单，只需要用到 ssh-keygen 和 openssl 即可，如果命令行下没有这两个工具，可以通过 homebrew 来安装。 生成的方法代码如下： 1234# 首先生成私钥文件，在生成过程中不要输入密码ssh-keygen -t rsa -b 4096 -m PEM -f
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-07 23:24" pubdate>
-              2021-02-07
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%97%A5%E5%B8%B8/">日常</a>
             
           </div>
         
