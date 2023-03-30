@@ -25,15 +25,19 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+  
   <title>Kaiser925&#39;s blogs.</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
 
 
-<!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -42,21 +46,42 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"www.zhangliangliang.cc","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.1"></head>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 <body>
-  <header style="height: 100vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>Kaiser925</strong>
@@ -79,7 +104,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/">
                 <i class="iconfont icon-home-fill"></i>
-                首页
+                <span>首页</span>
               </a>
             </li>
           
@@ -91,7 +116,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
-                归档
+                <span>归档</span>
               </a>
             </li>
           
@@ -103,7 +128,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
-                标签
+                <span>标签</span>
               </a>
             </li>
           
@@ -115,7 +140,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/">
                 <i class="iconfont icon-user-fill"></i>
-                关于
+                <span>关于</span>
               </a>
             </li>
           
@@ -123,14 +148,16 @@
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+              <i class="iconfont icon-search"></i>
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
           </li>
         
       </ul>
@@ -138,34 +165,40 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('https://wallpaper.kaiser925.workers.dev') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Stay hungry  Stay foolish">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://wallpaper.kaiser925.workers.dev') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
           
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
+            <span id="subtitle" data-typed-text="Stay hungry  Stay foolish"></span>
           
         </div>
+
+        
       </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
+        <div id="board"
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
@@ -179,17 +212,97 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/post/linux-fs-hierarchy-standard.html" target="_self">
+          linux 文件系统层次标准
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/linux-fs-hierarchy-standard.html" target="_self">
+        <div>
+          根据Linux 标准,  记录下 Linux 文件系统下各个目录的作用，起到备忘的作用。 文件属性首先是关于文件属性的说明，一个文件可以具备如下的两个属性，是否为 static 以及是否为 shareable。两个属性都不相同的文件就不应该放在同一个目录下。 Shareable的文件，即可分享的文件，具有这种属性的文件可以被其他的主机使用，例如家目录下的用户文件。 Unshareable的文件，即
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-11 14:06" pubdate>
+              2021-11-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux/">#Linux</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/post/close-goroutines.html" target="_self">
+          多生产者关闭 Goroutine
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/close-goroutines.html" target="_self">
+        <div>
+          在本篇文章中，将介绍如何在多个生产者完成生产后关闭 goroutine. 在编程中，我们会遇到多个生产者，单一消费者的场景。 在这种情况下，工作流会分为了两个 stage:  Stage 1: 多个生产者并发地计算结果，并将结果传入 channel Stage 2: 消费者从 channel 中读取结果，做下一步的计算  在两个 stage 完成工作后程序自然退出，因此需要在所有生产者完成工作后，
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-25 09:43" pubdate>
+              2021-06-25
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">#Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/post/generate-private-key-for-jwt.html" target="_self">
           为 JWT 生成私钥
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/post/generate-private-key-for-jwt.html" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/generate-private-key-for-jwt.html" target="_self">
+        <div>
           今天在写一个登录鉴权的接口，用到了 JWT，JWT 的签名与认证需要用到一对公私钥。所以需要在本地生成一对密钥。 方法很简单，只需要用到 ssh-keygen 和 openssl 即可，如果命令行下没有这两个工具，可以通过 homebrew 来安装。 生成的方法代码如下： 1234# 首先生成私钥文件，在生成过程中不要输入密码ssh-keygen -t rsa -b 4096 -m PEM -f
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -205,7 +318,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%97%A5%E5%B8%B8/">日常</a>
+              <a href="/tags/%E6%97%A5%E5%B8%B8/">#日常</a>
             
           </div>
         
@@ -224,12 +337,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/post/go-append-tip.html" target="_self">
-          
-          在开发的过程中，遇到了一个需要将 T 类型切片映射为 F 类型切片的操作，由于 Go 的标准库中并没有内置 Map 函数，于是就写了一个简单的辅助函数。 第一版是这样的 123456789101112131415161718var ts &#x3D; []struct &amp;#123;	Foo int&amp;#125; &amp;#123;		&amp;#123;			Foo: 1,		&amp;#125;,		&amp;#123;			Foo:
-        </a>
-      </p>
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/go-append-tip.html" target="_self">
+        <div>
+          在开发的过程中，遇到了一个需要将 T 类型切片映射为 F 类型切片的操作，由于 Go 的标准库中并没有内置 Map 函数，于是就写了一个简单的辅助函数。 第一版是这样的 123456789101112131415161718var ts = []struct &#123;	Foo int&#125; &#123;		&#123;			Foo: 1,		&#125;,		&#123;			Foo:
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -245,7 +358,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Go/">Go</a>
+              <a href="/tags/Go/">#Go</a>
             
           </div>
         
@@ -264,12 +377,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/post/how-do-I-write-program..html" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/how-do-I-write-program..html" target="_self">
+        <div>
           做为一名软件工程师，日常的工作就是去编写程序，写一段程序很简单，就比如 “hello world“。但是如果想要写好一段程序，就不是那么容易的事了，这篇文章主要是记录一下自己在编程时的一般流程。 1. 明确并且理解需求最近在读一本关于微服务架构的书，其中对需求有这样一个定义：  需求是一个必须要解决的问题，以及围绕这个问题的特定上下文环境  将每个开发任务当成需要解决的一道数学题。那么在解题的第一
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -285,7 +398,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%97%A5%E5%B8%B8/">日常</a>
+              <a href="/tags/%E6%97%A5%E5%B8%B8/">#日常</a>
             
           </div>
         
@@ -304,12 +417,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/post/Golang-functional-option.html" target="_self">
-          
-          在实例化一个含有多个字段的结构体时，往往会封装一个工厂函数，类似于 123456789101112131415&#x2F;&#x2F; 用于示例，实际情况可能有更多的字端type T struct &amp;#123;  A string  B int  C int  D bool&amp;#125;func NewT(a string, b int, c int, d bool) *T &amp;#123;  return &amp;T&amp;
-        </a>
-      </p>
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/Golang-functional-option.html" target="_self">
+        <div>
+          在实例化一个含有多个字段的结构体时，往往会封装一个工厂函数，类似于 123456789101112131415// 用于示例，实际情况可能有更多的字端type T struct &#123;  A string  B int  C int  D bool&#125;func NewT(a string, b int, c int, d bool) *T &#123;  return &amp;T&
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -325,7 +438,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Go/">Go</a>
+              <a href="/tags/Go/">#Go</a>
             
           </div>
         
@@ -344,12 +457,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/post/goland-remote-deployment.html" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/goland-remote-deployment.html" target="_self">
+        <div>
           最近准备写一个简单的容器管理工具，需要运行在 Linux 上。然而开发的机子是 MacBook，于是就想折腾一下自己的 goland，配置一下远程开发。 目标就是在本地编写的代码，一件部署到远程的服务器上并运行。 配置远程的服务器在进行开发之前，首先需要把远程的服务器给配置好。远程服务器的版本为 Ubuntu 20.04 ，准备使用的协议是 SFTP，所以需要在 ubuntu 20.04 上配置一
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -365,7 +478,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+              <a href="/tags/%E5%B7%A5%E5%85%B7/">#工具</a>
             
           </div>
         
@@ -384,12 +497,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/post/docker-remote-host.html" target="_self">
-          
-          介绍在某些情况下，需要工作的电脑上 docker CLI 连接到另一台主机上的 docker 服务器。记下具体的配置过程。 配置远程主机首先需要在远程主机上开启监听本地的端口， 修改 docker 的配置文件： 1vim &#x2F;etc&#x2F;docker&#x2F;daemon.json  修改，或增减 hosts 字段 123456&amp;#123;	&quot;hosts&quot;: [		&quot;unix:&#x2F;&#x2F;
-        </a>
-      </p>
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/docker-remote-host.html" target="_self">
+        <div>
+          介绍在某些情况下，需要工作的电脑上 docker CLI 连接到另一台主机上的 docker 服务器。记下具体的配置过程。 配置远程主机首先需要在远程主机上开启监听本地的端口， 修改 docker 的配置文件： 1vim /etc/docker/daemon.json  修改，或增减 hosts 字段 123456&#123;	&quot;hosts&quot;: [		&quot;unix://
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -405,7 +518,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/container/">container</a>
+              <a href="/tags/container/">#container</a>
             
           </div>
         
@@ -424,12 +537,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/post/DNS.html" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/DNS.html" target="_self">
+        <div>
           概述Domain Name System(DNS) 是一个用于计算机，服务以及其他资源连接到 Iternet 的分布式分层系统。DNS 是一个数据库，它保存了域名以及 IP 地址的映射。可以将域名转化成对应的 IP。 用户与互联网上的某台机器进行交互时，需要知道对方机器的 IP 地址，不论是 32 位还是点十分制的 IP 地址都不容易记忆，因此需要有一个容易记住的主机名称（域名），并且有一个对映的
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -445,7 +558,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Network/">Network</a>
+              <a href="/tags/Network/">#Network</a>
             
           </div>
         
@@ -464,12 +577,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/post/cgo-memory-free.html" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/cgo-memory-free.html" target="_self">
+        <div>
           介绍使用 cgo，Go 可以与 C 语言代码进行交互，但是在使用过程中，如果使用的姿势不对，那么就有可能带来内存泄漏问题。 Go 自带 GC，一般情况下不会发生内存泄漏事件，自带的 GC 会收集不再使用的对象，并将其释放。但是在使用 cgo 时，某些函数会将 C 语言对象分配到 C 的堆上，在 Go 中初始化的 C 对象，是需要显示的调用 C.free() 去释放。官方文档也写明了这一点。在 cg
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -485,87 +598,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Go/">Go</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/post/undefined.html" target="_self">
-          Python map, filter, reduce  函数的注意事项
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/post/undefined.html" target="_self">
-          
-          介绍 注意：本文所说的 python 都是指 python3，python2 已不再被支持 :)  map(), filter() 以及 reduce() 是 Python 中与函数式编程相关的三个函数，可以对可迭代序列做映射，过滤以及累积。熟练使用这三个函数可以提升编码速度，并且感受到函数式编程的一些思想。但是在使用过程中需要注意一些事项 TL;DR  from functools import
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-05-06 22:04" pubdate>
-              2020-05-06
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Python/">Python</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/post/shell-tips.html" target="_self">
-          Shell Tips 💡
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/post/shell-tips.html" target="_self">
-          
-          一些关于 shell 的笔记 权限判断在执行脚本时，确定当前的权限是否为 root 代码： 1234if [ &quot;$EUID&quot; -ne 0 ]  then echo &quot;not root&quot;  exitfi  EUID, 用于系统决定用户对系统资源的访问权限，等于 0 时表示权限为 root。 路径判断判断一个文件夹是否存在 代码： 123if [ -d &amp;quo
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-27 20:56" pubdate>
-              2020-02-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/shell/">shell</a>
+              <a href="/tags/Go/">#Go</a>
             
           </div>
         
@@ -610,32 +643,34 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
   
-
   
-</footer>
+  
+  
+</div>
 
+  </footer>
 
-  <!-- SCRIPTS -->
+  <!-- Scripts -->
   
   <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
@@ -654,10 +689,22 @@
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
 
-  <script  src="/js/local-search.js" ></script>
 
 
 
@@ -667,43 +714,22 @@
 
 
 
-  
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-        typing(title);
-      
-    })(window, document);
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>
