@@ -212,6 +212,46 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/post/go-runtime-image-timezone.html" target="_self">
+          Golang 运行时镜像时区问题
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/go-runtime-image-timezone.html" target="_self">
+        <div>
+          本文主要介绍 Go 程序设置时间戳计算时间时需要注意的问题，以及如何在产出的 Go 服务镜像中设置正确的文件。 在修复一个时间相关的 bug 后，部署新服务时出现了如下的错误 1could not load time location: unknown time zone Asia/Shanghai  系统报错显示无法加载 time zone，但是这段程序在本地运行是正常的。于是开始了排查之旅。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-11 15:24" pubdate>
+              2021-11-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">#Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/post/linux-fs-hierarchy-standard.html" target="_self">
           linux 文件系统层次标准
         </a>
@@ -559,46 +599,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Network/">#Network</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/post/cgo-memory-free.html" target="_self">
-          cgo 内存释放
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/post/cgo-memory-free.html" target="_self">
-        <div>
-          介绍使用 cgo，Go 可以与 C 语言代码进行交互，但是在使用过程中，如果使用的姿势不对，那么就有可能带来内存泄漏问题。 Go 自带 GC，一般情况下不会发生内存泄漏事件，自带的 GC 会收集不再使用的对象，并将其释放。但是在使用 cgo 时，某些函数会将 C 语言对象分配到 C 的堆上，在 Go 中初始化的 C 对象，是需要显示的调用 C.free() 去释放。官方文档也写明了这一点。在 cg
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-05-17 15:18" pubdate>
-              2020-05-17
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Go/">#Go</a>
             
           </div>
         
