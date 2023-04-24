@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>代码的坏味道</title>
+    <link href="/post/bad-smell-of-code.html"/>
+    <url>/post/bad-smell-of-code.html</url>
+    
+    <content type="html"><![CDATA[<p>代码的坏味道列表：</p><ol><li><strong>神秘的命名</strong>：代码不是直观明了的，命名无法表明自己的功能和用法</li><li><strong>重复的代码</strong>：在一处以上的地方看到相同的代码结构</li><li><strong>过长的函数</strong>：积极的分解函数，当感觉需要以注释来说明点什么的时候，把需要说明的东西写进一个独立的函数中，并以其用途命名</li><li><strong>过长的参数列表</strong></li><li><strong>全局数据</strong></li><li><strong>可变数据</strong>：约束对数据的更新，降低风险</li><li><strong>发散式变化</strong>：杂糅了不同上下文的模块因为不同的原因在不同的方向上发生变化，对某个上下文进行修改时，需要操心对另一个上下文的影响。</li><li><strong>霰弹式修改</strong>：遇到某种变化，需要在不同的地方做出小的修改</li><li><strong>依恋情结</strong>：一个函数与另一个模块中的函数或数据交流格外频繁，远胜于自身所处模块内部的交流。</li><li><strong>数据泥团</strong>：不同地方出现的三四项相同的字段，例如两个类中相同的字段，许多函数签名中相同的参数，将它们提炼到独立的对象中。</li><li><strong>基本类型偏执</strong>：不愿意创建对自己问题域有用的基本类型，如钱、坐标、范围等。</li><li><strong>重复的 switch</strong>：在不同的地方反复使用同样的 switch 逻辑</li><li><strong>循环语句</strong>：使用 Map Reduce Filter来替代循环</li><li><strong>冗余元素</strong></li><li><strong>夸夸其谈通用性</strong>：总有一天需要做这事，企图以各种各样的钩子和特殊情况来处理一些非必要的事情</li><li><strong>临时字段</strong>：某些为了特定情况而设置的字段</li><li><strong>过长的消息链</strong></li><li><strong>中间人</strong>：过度运用委托</li><li><strong>内幕交易</strong>：模块间大量交换数据， 减少模块间的数据交换，并将交换放到明面上</li><li><strong>过大的类</strong>：单个类做太多的事情</li><li><strong>异曲同工的类</strong>：相似的类却无法替换</li><li><strong>纯数据类</strong></li><li><strong>被拒绝的遗赠</strong>：复用超类的实现，但又不愿意支持超类的接口</li><li><strong>注释</strong>：一段长长的注释，因为糟糕的代码而存在</li></ol>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>重构</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>何时去重构</title>
     <link href="/post/principles-of-refactoring-p2.html"/>
     <url>/post/principles-of-refactoring-p2.html</url>

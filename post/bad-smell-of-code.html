@@ -16,22 +16,22 @@
   <meta name="author" content="Kaiser925">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在前一篇文章中，记录了为什么要去重构，在这篇文章中，我们将会聚焦于何时去重构。 在阐述何时去重构时，先了解三次法则  第一次做某事时只管去做； 第二次做类似的事时，会产生反感，但无论如何还是可以去做； 第三次做相同的事时，你就应该重构  预备性重构最佳的重构时机是在添加新功能之前。 在添加新功能之前，先检查现有的代码库，通常可以发现其中已经有类似功能的方法。可以对这些方法进行微调，避免出现重复代码">
+    <meta name="description" content="代码的坏味道列表：  神秘的命名：代码不是直观明了的，命名无法表明自己的功能和用法 重复的代码：在一处以上的地方看到相同的代码结构 过长的函数：积极的分解函数，当感觉需要以注释来说明点什么的时候，把需要说明的东西写进一个独立的函数中，并以其用途命名 过长的参数列表 全局数据 可变数据：约束对数据的更新，降低风险 发散式变化：杂糅了不同上下文的模块因为不同的原因在不同的方向上发生变化，对某个上下文进">
 <meta property="og:type" content="article">
-<meta property="og:title" content="何时去重构">
-<meta property="og:url" content="https://www.zhangliangliang.cc/post/principles-of-refactoring-p2.html">
+<meta property="og:title" content="代码的坏味道">
+<meta property="og:url" content="https://www.zhangliangliang.cc/post/bad-smell-of-code.html">
 <meta property="og:site_name" content="Kaiser925&#39;s blogs.">
-<meta property="og:description" content="在前一篇文章中，记录了为什么要去重构，在这篇文章中，我们将会聚焦于何时去重构。 在阐述何时去重构时，先了解三次法则  第一次做某事时只管去做； 第二次做类似的事时，会产生反感，但无论如何还是可以去做； 第三次做相同的事时，你就应该重构  预备性重构最佳的重构时机是在添加新功能之前。 在添加新功能之前，先检查现有的代码库，通常可以发现其中已经有类似功能的方法。可以对这些方法进行微调，避免出现重复代码">
+<meta property="og:description" content="代码的坏味道列表：  神秘的命名：代码不是直观明了的，命名无法表明自己的功能和用法 重复的代码：在一处以上的地方看到相同的代码结构 过长的函数：积极的分解函数，当感觉需要以注释来说明点什么的时候，把需要说明的东西写进一个独立的函数中，并以其用途命名 过长的参数列表 全局数据 可变数据：约束对数据的更新，降低风险 发散式变化：杂糅了不同上下文的模块因为不同的原因在不同的方向上发生变化，对某个上下文进">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-11T13:45:30.000Z">
-<meta property="article:modified_time" content="2023-04-11T13:45:30.491Z">
+<meta property="article:published_time" content="2023-04-24T12:29:21.000Z">
+<meta property="article:modified_time" content="2023-04-24T13:32:17.728Z">
 <meta property="article:author" content="Kaiser925">
 <meta property="article:tag" content="重构">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>何时去重构 - Kaiser925&#39;s blogs.</title>
+  <title>代码的坏味道 - Kaiser925&#39;s blogs.</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -185,7 +185,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="何时去重构"></span>
+            <span id="subtitle" data-typed-text="代码的坏味道"></span>
           
         </div>
 
@@ -196,8 +196,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-11 21:45" pubdate>
-          2023年4月11日 晚上
+        <time datetime="2023-04-24 20:29" pubdate>
+          2023年4月24日 晚上
         </time>
       </span>
     
@@ -209,7 +209,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.3k 字
+          636 字
         
       </span>
     
@@ -221,7 +221,7 @@
         
         
           <!-- compatible with older versions-->
-          5 分钟
+          2 分钟
         
       </span>
     
@@ -259,36 +259,37 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">何时去重构</h1>
+            <h1 style="display: none">代码的坏味道</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在<a target="_blank" rel="noopener" href="https://zhangliangliang.cc/post/principles-of-refactoring-p1.html">前一篇文章</a>中，记录了为什么要去重构，在这篇文章中，我们将会聚焦于何时去重构。</p>
-<p>在阐述何时去重构时，先了解三次法则</p>
-<blockquote>
-<p>第一次做某事时只管去做；</p>
-<p>第二次做类似的事时，会产生反感，但无论如何还是可以去做；</p>
-<p>第三次做相同的事时，你就应该重构</p>
-</blockquote>
-<h2 id="预备性重构"><a href="#预备性重构" class="headerlink" title="预备性重构"></a>预备性重构</h2><p>最佳的重构时机是在添加新功能之前。</p>
-<p>在添加新功能之前，先检查现有的代码库，通常可以发现其中已经有类似功能的方法。可以对这些方法进行微调，避免出现重复代码。</p>
-<p>如果不进行重构，最简单的方式就是复制一份代码，并进行一些微调，例如调整参数或逻辑。这样会导致重复的代码，当需要修改方法时，就必须在两个地方进行修改。甚至在需要新方法时，又会复制一份代码并进行微调。这样反复之后，代码将变得臃肿不堪。</p>
-<p>因此，当添加新功能时，如果已有代码库中已经有类似功能的方法，就可以通过函数参数化进行重构。这样一来，只需调用该方法并传入所需的参数即可。</p>
-<p>合并重复的代码也会使修复 bug 更加容易。只需在一个地方进行调整，就可以修复相关的 bug，而不必在代码库的各个角落查找重复代码并逐一修复。</p>
-<h2 id="帮助理解代码的功能"><a href="#帮助理解代码的功能" class="headerlink" title="帮助理解代码的功能"></a>帮助理解代码的功能</h2><p>在修改一段代码之前，我们首先需要弄懂这段代码在做什么。在思考代码是在做什么的过程中，询问自己能不能去重构这段代码，使得它更加容易理解，一目了然。</p>
-<p>比如一个糟糕的函数命名，或者一段结构糟糕的逻辑判断都会提醒我们去重构它。</p>
-<p>在阅读代码的过程中，我们会形成自己的理解，但这种理解往往不能长时间存于脑中。我们通过重构将自己的理解注入代码中，这样我们的理解就随着代码一起被保存下来了，这样后来的人就可以通过阅读代码获得其中的理解了。并且代码能否正常运行也会验证我们的理解是否正确。</p>
-<p>在一次次小的重构之后，代码的逻辑就会逐渐清晰，我们对于代码的理解也会逐渐加深。这时我们就能从更高的角度去理解代码，从而发现隐藏在代码之后的设计问题。如果只是阅读，而没有亲手去重构代码，那就无法获得深入的理解，从而体会到代码背后的设计思路。</p>
-<p>在厘清藤蔓和杂枝之后，我们才能看到树干生长的情况。</p>
-<h2 id="捡垃圾式重构"><a href="#捡垃圾式重构" class="headerlink" title="捡垃圾式重构"></a>捡垃圾式重构</h2><p>在我们理解了代码是在做什么之后， 可能会发现它做的不够好。例如一段设计不合理的逻辑判断语句，两个函数的功能几乎相同，等等。</p>
-<p>如果当前手上又着更重要的任务，无法分心太多，而重构有需要花费一定的精力，那么就用便利贴记录下需要重构的地方，在完成任务后重构。如果不需太多的精力，那么就随手将它重构掉。就像看到地上的废纸，随手捡起扔进垃圾桶一样。</p>
-<h2 id="Code-review-时重构代码"><a href="#Code-review-时重构代码" class="headerlink" title="Code review 时重构代码"></a>Code review 时重构代码</h2><p>有些公司会代码合并前进行 code review。code review 可以改善开发情况，帮助知识在开发团队中传播，让更多的人了解到代码库中的更多部分。</p>
-<p>在 code review 时， 如果采用 Pull Request 方式，由于代码作者不在身边，重构的效果可能并不好。作者可以提供更多的上下文，这对于重构有着积极的作用。在这种情况下，结对编程是最优的选择，在编码的过程中，不断的进行 code review。</p>
-<h2 id="何时不要去重构"><a href="#何时不要去重构" class="headerlink" title="何时不要去重构"></a>何时不要去重构</h2><ol>
-<li>如果代码不需要被修改，那么它就不需要被重构</li>
-<li>如果丑陋的代码隐藏在 API 下，不需要直接接触，那么就不需要被重构</li>
-<li>如果一段代码，重写的难度低于重构，那么就去重写，而不是重构</li>
+                <p>代码的坏味道列表：</p>
+<ol>
+<li><strong>神秘的命名</strong>：代码不是直观明了的，命名无法表明自己的功能和用法</li>
+<li><strong>重复的代码</strong>：在一处以上的地方看到相同的代码结构</li>
+<li><strong>过长的函数</strong>：积极的分解函数，当感觉需要以注释来说明点什么的时候，把需要说明的东西写进一个独立的函数中，并以其用途命名</li>
+<li><strong>过长的参数列表</strong></li>
+<li><strong>全局数据</strong></li>
+<li><strong>可变数据</strong>：约束对数据的更新，降低风险</li>
+<li><strong>发散式变化</strong>：杂糅了不同上下文的模块因为不同的原因在不同的方向上发生变化，对某个上下文进行修改时，需要操心对另一个上下文的影响。</li>
+<li><strong>霰弹式修改</strong>：遇到某种变化，需要在不同的地方做出小的修改</li>
+<li><strong>依恋情结</strong>：一个函数与另一个模块中的函数或数据交流格外频繁，远胜于自身所处模块内部的交流。</li>
+<li><strong>数据泥团</strong>：不同地方出现的三四项相同的字段，例如两个类中相同的字段，许多函数签名中相同的参数，将它们提炼到独立的对象中。</li>
+<li><strong>基本类型偏执</strong>：不愿意创建对自己问题域有用的基本类型，如钱、坐标、范围等。</li>
+<li><strong>重复的 switch</strong>：在不同的地方反复使用同样的 switch 逻辑</li>
+<li><strong>循环语句</strong>：使用 Map Reduce Filter来替代循环</li>
+<li><strong>冗余元素</strong></li>
+<li><strong>夸夸其谈通用性</strong>：总有一天需要做这事，企图以各种各样的钩子和特殊情况来处理一些非必要的事情</li>
+<li><strong>临时字段</strong>：某些为了特定情况而设置的字段</li>
+<li><strong>过长的消息链</strong></li>
+<li><strong>中间人</strong>：过度运用委托</li>
+<li><strong>内幕交易</strong>：模块间大量交换数据， 减少模块间的数据交换，并将交换放到明面上</li>
+<li><strong>过大的类</strong>：单个类做太多的事情</li>
+<li><strong>异曲同工的类</strong>：相似的类却无法替换</li>
+<li><strong>纯数据类</strong></li>
+<li><strong>被拒绝的遗赠</strong>：复用超类的实现，但又不愿意支持超类的接口</li>
+<li><strong>注释</strong>：一段长长的注释，因为糟糕的代码而存在</li>
 </ol>
 
                 
@@ -314,8 +315,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>何时去重构</div>
-      <div>https://www.zhangliangliang.cc/post/principles-of-refactoring-p2.html</div>
+      <div>代码的坏味道</div>
+      <div>https://www.zhangliangliang.cc/post/bad-smell-of-code.html</div>
     </div>
     <div class="license-meta">
       
@@ -327,7 +328,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月11日</div>
+          <div>2023年4月24日</div>
         </div>
       
       
@@ -359,18 +360,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/post/bad-smell-of-code.html" title="代码的坏味道">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">代码的坏味道</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/post/handle-error-gracefully.html" title="优雅的处理错误">
-                        <span class="hidden-mobile">优雅的处理错误</span>
+                      <a href="/post/principles-of-refactoring-p2.html" title="何时去重构">
+                        <span class="hidden-mobile">何时去重构</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
