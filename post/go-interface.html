@@ -24,7 +24,7 @@
 <meta property="og:description" content="什么是接口Go 语言中的接口用于定义一组行为。其中，每个行为都是一个由一个方法进行声明的。 在声明一个接口时，只需要声明方法的名称，方法的参数列表以及结果列表即可。如： 1234type Person interface &amp;#123;  Listen(string)  Say() string&amp;#125;  Person 接口就是定义了一组与 “Person” 相关的行为。 接口类型是无法实例化的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-04T02:20:21.000Z">
-<meta property="article:modified_time" content="2021-11-11T07:24:29.532Z">
+<meta property="article:modified_time" content="2023-03-27T13:40:12.243Z">
 <meta property="article:author" content="Kaiser925">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
@@ -266,7 +266,7 @@
                 
                 <h2 id="什么是接口"><a href="#什么是接口" class="headerlink" title="什么是接口"></a>什么是接口</h2><p>Go 语言中的接口用于定义一组行为。其中，每个行为都是一个由一个方法进行声明的。</p>
 <p>在声明一个接口时，只需要声明方法的名称，方法的参数列表以及结果列表即可。如：</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">interface</span> &#123;<br>  Listen(<span class="hljs-keyword">string</span>)<br>  Say() <span class="hljs-keyword">string</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">interface</span> &#123;<br>  Listen(<span class="hljs-type">string</span>)<br>  Say() <span class="hljs-type">string</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>Person 接口就是定义了一组与 “Person” 相关的行为。</p>
 <p>接口类型是无法实例化的，这意味着无法使用 new 或 make 函数来创建接口类型的值。同样的，也不可以使用一个字面量来表示某个接口的值。</p>
@@ -274,14 +274,14 @@
 
 <h2 id="接口的实现"><a href="#接口的实现" class="headerlink" title="接口的实现"></a>接口的实现</h2><p>如果一个数据类型 <strong>T</strong> 的方法集合中包含了接口 <strong>I</strong> 声明的所有方法，那么它就是 <strong>I</strong> 的实现类型。即  “Duck Typing”。</p>
 <p>例如：</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> T <span class="hljs-keyword">string</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(t *T)</span> <span class="hljs-title">Listen</span><span class="hljs-params">(word <span class="hljs-keyword">string</span>)</span></span> &#123;<br>  <span class="hljs-comment">// .....</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(t *T)</span> <span class="hljs-title">Say</span><span class="hljs-params">()</span> <span class="hljs-title">string</span></span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;T&quot;</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> T <span class="hljs-type">string</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(t *T)</span></span> Listen(word <span class="hljs-type">string</span>) &#123;<br>  <span class="hljs-comment">// .....</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(t *T)</span></span> Say() <span class="hljs-type">string</span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;T&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>T 的所有指针方法都包含了 Person 所声明的方法，因此 *T 类型就是 Person 的实现类型。⚠️注意的是，T 类型并不是， *T 类型才是。</p>
 <p>在 Go 中，数据类型之间并<strong>不存在继承关系</strong>，只有组合关系。这意味着，可以在一个接口类型的声明中嵌入任意数量的其他接口类型。让一组行为包含其他的行为组。例如：</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> TPerson <span class="hljs-keyword">interface</span> &#123;<br>  Person<br>  Eat(<span class="hljs-keyword">string</span>)<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> TPerson <span class="hljs-keyword">interface</span> &#123;<br>  Person<br>  Eat(<span class="hljs-type">string</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="动态类型与静态类型"><a href="#动态类型与静态类型" class="headerlink" title="动态类型与静态类型"></a>动态类型与静态类型</h2><p>有如下两个变量：</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">var</span> t T = <span class="hljs-string">&quot;abc&quot;</span><br><span class="hljs-keyword">var</span> p Person = &amp;t<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> t T = <span class="hljs-string">&quot;abc&quot;</span><br><span class="hljs-keyword">var</span> p Person = &amp;t<br></code></pre></td></tr></table></figure>
 
 <p>被赋予接口类型变量的值称为<strong>动态值</strong>， &amp;t 就是 p 的动态值；</p>
 <p>动态值的类型就是<strong>动态类型</strong>，p 的动态类型是 *T；</p>

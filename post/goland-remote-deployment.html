@@ -24,7 +24,7 @@
 <meta property="og:description" content="最近准备写一个简单的容器管理工具，需要运行在 Linux 上。然而开发的机子是 MacBook，于是就想折腾一下自己的 goland，配置一下远程开发。 目标就是在本地编写的代码，一件部署到远程的服务器上并运行。 配置远程的服务器在进行开发之前，首先需要把远程的服务器给配置好。远程服务器的版本为 Ubuntu 20.04 ，准备使用的协议是 SFTP，所以需要在 ubuntu 20.04 上配置一">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-28T13:35:54.000Z">
-<meta property="article:modified_time" content="2021-11-11T07:24:29.533Z">
+<meta property="article:modified_time" content="2023-03-27T13:40:12.244Z">
 <meta property="article:author" content="Kaiser925">
 <meta property="article:tag" content="工具">
 <meta name="twitter:card" content="summary_large_image">
@@ -269,25 +269,25 @@
 <h3 id="配置远程的服务器"><a href="#配置远程的服务器" class="headerlink" title="配置远程的服务器"></a>配置远程的服务器</h3><p>在进行开发之前，首先需要把远程的服务器给配置好。远程服务器的版本为 Ubuntu 20.04 ，准备使用的协议是 SFTP，所以需要在 ubuntu 20.04 上配置一个服务器。配置过程如下：</p>
 <ul>
 <li><p>安装 ssh </p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">sudo apt install openssh-server<br></code></pre></div></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt install openssh-server<br></code></pre></td></tr></table></figure></li>
 <li><p>配置 ssh, 编辑 /etc/ssh/sshd_config，在最后加入</p>
-<figure class="highlight sh"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sh">AllowGroups ssh-users sftp-users<br>Match Group sftp-users<br>ChrootDirectory /home<br>AllowTcpForwarding no<br>X11Forwarding no<br>ForceCommand internal-sftp<br></code></pre></div></td></tr></table></figure></li>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh">AllowGroups ssh-users sftp-users<br>Match Group sftp-users<br>ChrootDirectory /home<br>AllowTcpForwarding no<br>X11Forwarding no<br>ForceCommand internal-sftp<br></code></pre></td></tr></table></figure></li>
 <li><p>重启 sshd</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">sudo service sshd restart<br></code></pre></div></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo service sshd restart<br></code></pre></td></tr></table></figure></li>
 <li><p>创建 sftp 用户组</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">sudo addgroup sftp<br></code></pre></div></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo addgroup sftp<br></code></pre></td></tr></table></figure></li>
 <li><p>创建一个新的用户，加入到 sftp 组中, 设置密码</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">sudo useradd -m sftpuser -g sftp<br>sudo passwd sftpuser<br></code></pre></div></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo useradd -m sftpuser -g sftp<br>sudo passwd sftpuser<br></code></pre></td></tr></table></figure></li>
 <li><p>最后赋予用户目录权限</p>
-<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">sudo chmod <span class="hljs-number">700</span> <span class="hljs-regexp">/home/</span>sftpuser/<br></code></pre></div></td></tr></table></figure></li>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo chmod <span class="hljs-number">700</span> <span class="hljs-regexp">/home/</span>sftpuser/<br></code></pre></td></tr></table></figure></li>
 <li><p>测试是否成功</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">sftp sftpuser@127.0.0.1<br></code></pre></div></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sftp sftpuser@127.0.0.1<br></code></pre></td></tr></table></figure></li>
 </ul>
 <p>配置完成没问题后，开始设置 Goland。</p>
 <h3 id="配置-Goland"><a href="#配置-Goland" class="headerlink" title="配置 Goland"></a>配置 Goland</h3><p>Google 一下 Goland remote, 第一个结果就是 Jetbrains 家的文档。稳👍。<a target="_blank" rel="noopener" href="https://www.jetbrains.com/help/go/creating-a-remote-server-configuration.html">地址在这🔗</a>。既然有官方文档，那就根据官方文档一步步的来。</p>
 <ul>
 <li><p>第一步，打开设置菜单：</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs mipsasm">windows &amp;&amp; linux<br>File &gt; Settings &gt; <span class="hljs-keyword">Build, </span>Execution, Deployment &gt; Deployment <br><br>macOS<br>GoLand &gt; <span class="hljs-keyword">Preferences </span>&gt; <span class="hljs-keyword">Build, </span>Execution, Deployment &gt; Deployment<br></code></pre></div></td></tr></table></figure></li>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">windows &amp;&amp; linux<br>File &gt; Settings &gt; <span class="hljs-keyword">Build, </span>Execution, Deployment &gt; Deployment <br><br>macOS<br>GoLand &gt; <span class="hljs-keyword">Preferences </span>&gt; <span class="hljs-keyword">Build, </span>Execution, Deployment &gt; Deployment<br></code></pre></td></tr></table></figure></li>
 <li><p>接下来，点击 ‘Add’, 添加一个新的远程服务器，选择一个协议，因为远程服务器部署的是 SFTP，所以选择SFTP 然后输入名字，完成添加。</p>
 </li>
 <li><p> 新建一个 SSH configuration，输入地址、端口、用户名、密码，点击 Test connect. 确认没问题后，点击 OK</p>

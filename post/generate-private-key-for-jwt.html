@@ -24,7 +24,7 @@
 <meta property="og:description" content="今天在写一个登录鉴权的接口，用到了 JWT，JWT 的签名与认证需要用到一对公私钥。所以需要在本地生成一对密钥。 方法很简单，只需要用到 ssh-keygen 和 openssl 即可，如果命令行下没有这两个工具，可以通过 homebrew 来安装。 生成的方法代码如下： 1234# 首先生成私钥文件，在生成过程中不要输入密码ssh-keygen -t rsa -b 4096 -m PEM -f">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-02-07T15:24:15.000Z">
-<meta property="article:modified_time" content="2021-11-11T07:24:29.521Z">
+<meta property="article:modified_time" content="2023-03-27T13:40:12.229Z">
 <meta property="article:author" content="Kaiser925">
 <meta property="article:tag" content="日常">
 <meta name="twitter:card" content="summary_large_image">
@@ -267,7 +267,7 @@
                 <p>今天在写一个登录鉴权的接口，用到了 JWT，JWT 的签名与认证需要用到一对公私钥。所以需要在本地生成一对密钥。</p>
 <p>方法很简单，只需要用到 ssh-keygen 和 openssl 即可，如果命令行下没有这两个工具，可以通过 homebrew 来安装。</p>
 <p>生成的方法代码如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># 首先生成私钥文件，在生成过程中不要输入密码</span><br>ssh-keygen -t rsa -b 4096 -m PEM -f private.key<br><span class="hljs-comment"># 然后根据私钥生成对应的公钥</span><br>openssl rsa -<span class="hljs-keyword">in</span> private.key -pubout -outform PEM -out public.key.pub<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 首先生成私钥文件，在生成过程中不要输入密码</span><br>ssh-keygen -t rsa -b 4096 -m PEM -f private.key<br><span class="hljs-comment"># 然后根据私钥生成对应的公钥</span><br>openssl rsa -<span class="hljs-keyword">in</span> private.key -pubout -outform PEM -out public.key.pub<br></code></pre></td></tr></table></figure>
 
 <p>完成之后就会在当前文件夹产生两个文件，分别是私钥以及公钥。然后就可以利用它们去签发以及验证 token 了。</p>
 
