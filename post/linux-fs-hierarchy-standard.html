@@ -19,7 +19,7 @@
     <meta name="description" content="根据Linux 标准,  记录下 Linux 文件系统下各个目录的作用，起到备忘的作用。 文件属性首先是关于文件属性的说明，一个文件可以具备如下的两个属性，是否为 static 以及是否为 shareable。两个属性都不相同的文件就不应该放在同一个目录下。 Shareable的文件，即可分享的文件，具有这种属性的文件可以被其他的主机使用，例如家目录下的用户文件。 Unshareable的文件，即">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux 文件系统层次标准">
-<meta property="og:url" content="https://www.zhangliangliang.cc/post/linux-fs-hierarchy-standard.html">
+<meta property="og:url" content="https://blog.zhangliangliang.cc/post/linux-fs-hierarchy-standard.html">
 <meta property="og:site_name" content="Kaiser925&#39;s blogs.">
 <meta property="og:description" content="根据Linux 标准,  记录下 Linux 文件系统下各个目录的作用，起到备忘的作用。 文件属性首先是关于文件属性的说明，一个文件可以具备如下的两个属性，是否为 static 以及是否为 shareable。两个属性都不相同的文件就不应该放在同一个目录下。 Shareable的文件，即可分享的文件，具有这种属性的文件可以被其他的主机使用，例如家目录下的用户文件。 Unshareable的文件，即">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blog.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -392,7 +392,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>linux 文件系统层次标准</div>
-      <div>https://www.zhangliangliang.cc/post/linux-fs-hierarchy-standard.html</div>
+      <div>https://blog.zhangliangliang.cc/post/linux-fs-hierarchy-standard.html</div>
     </div>
     <div class="license-meta">
       

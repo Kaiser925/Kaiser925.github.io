@@ -19,7 +19,7 @@
     <meta name="description" content="在本篇文章中，将介绍如何在多个生产者完成生产后关闭 goroutine. 在编程中，我们会遇到多个生产者，单一消费者的场景。 在这种情况下，工作流会分为了两个 stage:  Stage 1: 多个生产者并发地计算结果，并将结果传入 channel Stage 2: 消费者从 channel 中读取结果，做下一步的计算  在两个 stage 完成工作后程序自然退出，因此需要在所有生产者完成工作后，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多生产者关闭 Goroutine">
-<meta property="og:url" content="https://www.zhangliangliang.cc/post/close-goroutines.html">
+<meta property="og:url" content="https://blog.zhangliangliang.cc/post/close-goroutines.html">
 <meta property="og:site_name" content="Kaiser925&#39;s blogs.">
 <meta property="og:description" content="在本篇文章中，将介绍如何在多个生产者完成生产后关闭 goroutine. 在编程中，我们会遇到多个生产者，单一消费者的场景。 在这种情况下，工作流会分为了两个 stage:  Stage 1: 多个生产者并发地计算结果，并将结果传入 channel Stage 2: 消费者从 channel 中读取结果，做下一步的计算  在两个 stage 完成工作后程序自然退出，因此需要在所有生产者完成工作后，">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blog.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -305,7 +305,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>多生产者关闭 Goroutine</div>
-      <div>https://www.zhangliangliang.cc/post/close-goroutines.html</div>
+      <div>https://blog.zhangliangliang.cc/post/close-goroutines.html</div>
     </div>
     <div class="license-meta">
       

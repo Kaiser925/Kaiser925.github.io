@@ -19,7 +19,7 @@
     <meta name="description" content="介绍在之前的文章中，了解了什么是语言处理器，具体见这里。接下来就是详细了解一下编译器的结构。 整体来看，一个编译器分为前端以及后端两个部分。 前端也就是分析部分，在这个阶段，编译器会将源程序分解成多个组成要素，然后在这些要素上加上语法结构，之后就会利用这个语法结构去创建程序的中间表示。 分析会对程序的语法，语义进行分析，如果存在不一致的情况，编译器就会返回相应的信息。与此同时，分析部分会搜集程序的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="词法分析">
-<meta property="og:url" content="https://www.zhangliangliang.cc/post/lexical-analysis.html">
+<meta property="og:url" content="https://blog.zhangliangliang.cc/post/lexical-analysis.html">
 <meta property="og:site_name" content="Kaiser925&#39;s blogs.">
 <meta property="og:description" content="介绍在之前的文章中，了解了什么是语言处理器，具体见这里。接下来就是详细了解一下编译器的结构。 整体来看，一个编译器分为前端以及后端两个部分。 前端也就是分析部分，在这个阶段，编译器会将源程序分解成多个组成要素，然后在这些要素上加上语法结构，之后就会利用这个语法结构去创建程序的中间表示。 分析会对程序的语法，语义进行分析，如果存在不一致的情况，编译器就会返回相应的信息。与此同时，分析部分会搜集程序的">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blog.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -310,7 +310,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>词法分析</div>
-      <div>https://www.zhangliangliang.cc/post/lexical-analysis.html</div>
+      <div>https://blog.zhangliangliang.cc/post/lexical-analysis.html</div>
     </div>
     <div class="license-meta">
       

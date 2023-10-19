@@ -19,7 +19,7 @@
     <meta name="description" content="单例模式是一种最基本的设计模式，属于创造模式的一种。在应用了单例模式的时候，类的实例在全局中只会存在一个。实例也只会被创建一次。通常用于系统只需要拥有一个全局对象的时候。例如数据库连接对象。 单例模式分为懒汉和饿汉模式两种。 首先是饿汉模式： 1234567type object struct&amp;#123;&amp;#125;var instance *object &#x3D; &amp;object&amp;#123;&amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Golang 单例模式">
-<meta property="og:url" content="https://www.zhangliangliang.cc/post/golang-singleton-parttern.html">
+<meta property="og:url" content="https://blog.zhangliangliang.cc/post/golang-singleton-parttern.html">
 <meta property="og:site_name" content="Kaiser925&#39;s blogs.">
 <meta property="og:description" content="单例模式是一种最基本的设计模式，属于创造模式的一种。在应用了单例模式的时候，类的实例在全局中只会存在一个。实例也只会被创建一次。通常用于系统只需要拥有一个全局对象的时候。例如数据库连接对象。 单例模式分为懒汉和饿汉模式两种。 首先是饿汉模式： 1234567type object struct&amp;#123;&amp;#125;var instance *object &#x3D; &amp;object&amp;#123;&amp;">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blog.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -305,7 +305,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Golang 单例模式</div>
-      <div>https://www.zhangliangliang.cc/post/golang-singleton-parttern.html</div>
+      <div>https://blog.zhangliangliang.cc/post/golang-singleton-parttern.html</div>
     </div>
     <div class="license-meta">
       

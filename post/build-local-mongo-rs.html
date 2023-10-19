@@ -19,7 +19,7 @@
     <meta name="description" content="本文主要介绍如何在本地搭建一个 3 节点的mongo replica set。 准备工作 在官方的 下载中心 选择对应平台的安装包，解压并安装完成 将 mongod 以及配套的工具路径加入 $PATH 命令行终端  打开命令行，输入如下的代码： 1mongod --dbpath &lt;data_dir&gt; --port 27017  上面的代码将会启动一个 mongod 的实例，监听 270">
 <meta property="og:type" content="article">
 <meta property="og:title" content="搭建一个 mongo replica set">
-<meta property="og:url" content="https://www.zhangliangliang.cc/post/build-local-mongo-rs.html">
+<meta property="og:url" content="https://blog.zhangliangliang.cc/post/build-local-mongo-rs.html">
 <meta property="og:site_name" content="Kaiser925&#39;s blogs.">
 <meta property="og:description" content="本文主要介绍如何在本地搭建一个 3 节点的mongo replica set。 准备工作 在官方的 下载中心 选择对应平台的安装包，解压并安装完成 将 mongod 以及配套的工具路径加入 $PATH 命令行终端  打开命令行，输入如下的代码： 1mongod --dbpath &lt;data_dir&gt; --port 27017  上面的代码将会启动一个 mongod 的实例，监听 270">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blog.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -330,7 +330,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>搭建一个 mongo replica set</div>
-      <div>https://www.zhangliangliang.cc/post/build-local-mongo-rs.html</div>
+      <div>https://blog.zhangliangliang.cc/post/build-local-mongo-rs.html</div>
     </div>
     <div class="license-meta">
       

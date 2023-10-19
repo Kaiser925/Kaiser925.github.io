@@ -19,7 +19,7 @@
     <meta name="description" content="Kubernetes 在容器编排领域已经成为事实上的标准，一款云原生应用在开发周期的最后阶段都是会被部署到 k8s 集群之上。 部署在 k8s 上的应用在免去了拓展，迁移，服务发现等一系列工作的同时，也带来了其他的问题。 由于 Kubernetes 的资源都是声明式的，这意味着如果想要部署一款新的应用，那么就需要围绕应用所需的资源，以及其的元信息编写对应的 yaml 文件，包括不限于 servic">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为何需要 Helm">
-<meta property="og:url" content="https://www.zhangliangliang.cc/post/why-need-helm.html">
+<meta property="og:url" content="https://blog.zhangliangliang.cc/post/why-need-helm.html">
 <meta property="og:site_name" content="Kaiser925&#39;s blogs.">
 <meta property="og:description" content="Kubernetes 在容器编排领域已经成为事实上的标准，一款云原生应用在开发周期的最后阶段都是会被部署到 k8s 集群之上。 部署在 k8s 上的应用在免去了拓展，迁移，服务发现等一系列工作的同时，也带来了其他的问题。 由于 Kubernetes 的资源都是声明式的，这意味着如果想要部署一款新的应用，那么就需要围绕应用所需的资源，以及其的元信息编写对应的 yaml 文件，包括不限于 servic">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blog.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -310,7 +310,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>为何需要 Helm</div>
-      <div>https://www.zhangliangliang.cc/post/why-need-helm.html</div>
+      <div>https://blog.zhangliangliang.cc/post/why-need-helm.html</div>
     </div>
     <div class="license-meta">
       

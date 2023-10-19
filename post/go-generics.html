@@ -19,7 +19,7 @@
     <meta name="description" content="即将发布的 Go 1.18 将会带来一个巨大的更新：泛型。  官方教程：https:&#x2F;&#x2F;go.dev&#x2F;doc&#x2F;tutorial&#x2F;generics  这篇文章是对官方指引的翻译。 准备在正式尝试泛型之前，需要做如下的工作  安装 go1.18beta1 或更新的版本。安装方式请看 beta版本的安装与使用 一个可以编辑代码的编辑器，任何你喜欢的编辑器都可以 命令行终端，在 Linux 和 mac 上">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 泛型预览">
-<meta property="og:url" content="https://www.zhangliangliang.cc/post/go-generics.html">
+<meta property="og:url" content="https://blog.zhangliangliang.cc/post/go-generics.html">
 <meta property="og:site_name" content="Kaiser925&#39;s blogs.">
 <meta property="og:description" content="即将发布的 Go 1.18 将会带来一个巨大的更新：泛型。  官方教程：https:&#x2F;&#x2F;go.dev&#x2F;doc&#x2F;tutorial&#x2F;generics  这篇文章是对官方指引的翻译。 准备在正式尝试泛型之前，需要做如下的工作  安装 go1.18beta1 或更新的版本。安装方式请看 beta版本的安装与使用 一个可以编辑代码的编辑器，任何你喜欢的编辑器都可以 命令行终端，在 Linux 和 mac 上">
 <meta property="og:locale" content="zh_CN">
@@ -70,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blog.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -478,7 +478,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Go 泛型预览</div>
-      <div>https://www.zhangliangliang.cc/post/go-generics.html</div>
+      <div>https://blog.zhangliangliang.cc/post/go-generics.html</div>
     </div>
     <div class="license-meta">
       

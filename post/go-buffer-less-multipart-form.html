@@ -19,7 +19,7 @@
     <meta name="description" content="介绍当涉及到文件上传时，低内存占用的客户端是非常重要的。在本篇博客中，我们将介绍如何使用Go语言实现一个低内存占用的HTTP文件上传客户端。 流程首先，让我们先讨论一下HTTP文件上传的基本原理。HTTP文件上传是通过POST请求向服务器发送数据的。请求的头部包含文件的元数据，请求的主体则包含文件的二进制数据。由于HTTP请求和响应在网络上传输的过程中可能会被分割成多个小块，因此上传大文件时会占用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 低内存大文件上传">
-<meta property="og:url" content="https://www.zhangliangliang.cc/post/go-buffer-less-multipart-form.html">
+<meta property="og:url" content="https://blog.zhangliangliang.cc/post/go-buffer-less-multipart-form.html">
 <meta property="og:site_name" content="Kaiser925&#39;s blogs.">
 <meta property="og:description" content="介绍当涉及到文件上传时，低内存占用的客户端是非常重要的。在本篇博客中，我们将介绍如何使用Go语言实现一个低内存占用的HTTP文件上传客户端。 流程首先，让我们先讨论一下HTTP文件上传的基本原理。HTTP文件上传是通过POST请求向服务器发送数据的。请求的头部包含文件的元数据，请求的主体则包含文件的二进制数据。由于HTTP请求和响应在网络上传输的过程中可能会被分割成多个小块，因此上传大文件时会占用">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blog.zhangliangliang.cc","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -299,7 +299,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Go 低内存大文件上传</div>
-      <div>https://www.zhangliangliang.cc/post/go-buffer-less-multipart-form.html</div>
+      <div>https://blog.zhangliangliang.cc/post/go-buffer-less-multipart-form.html</div>
     </div>
     <div class="license-meta">
       
