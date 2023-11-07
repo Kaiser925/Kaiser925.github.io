@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>声明式 API</title>
+    <link href="/post/declarative-api.html"/>
+    <url>/post/declarative-api.html</url>
+    
+    <content type="html"><![CDATA[<p>声明式 API 是一种软件设计理念和做法，它要求用户描述他们想要达到的目标状态，由服务自身去令系统达到目标状态。</p><p>在声明式 API 中，用户不需要关心系统内部的实现细节，只需要描述他们想要的结果即可。这使得声明式 API 更加易于理解和使用，也更容易维护和扩展。</p><p>声明式 API 与命令式 API 的区别在于，命令式 API 要求用户描述一系列的动作，这些动作如果被正确的顺利执行，最终结果是系统达到了用户期望的目标状态。</p><p>在一个声明式 API 系统中，服务通常分为三个组件，分别是负责处理数据请求的 APIServer，负责调度数据对象的 controller 以及负责持久化数据的数据库。</p><p>如果我们将系统看作一个餐厅，根据用户的需求来制作美食。服务员就是系统中的 APIServer 的角色，订单则是我们的数据库， 厨师则是 controller。</p><p>现在用户需要一份蛋炒饭，他向服务员说了自己的需求，于是服务员写下了下面的订单</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">主食:</span> <span class="hljs-string">蛋炒饭</span><br><span class="hljs-string">备注:</span> <span class="hljs-string">加个火腿肠</span><br><span class="hljs-string">单号:</span> <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure><p>写好的订单会传递到后厨，此时厨师就会根据订单的需求来做一碗加火腿肠的蛋炒饭。厨师根据预定好的制作炒饭的流程做出一碗蛋炒饭。再由服务员端给客户。</p><p>对于客户来说，他只需要向服务员说明自己想要的蛋炒饭是什么样的，之后等待蛋炒饭做好就可以了。而不需要一步步的告诉厨师怎么制作蛋炒饭。</p><p>因此使用声明式 API 对于用户来说，屏蔽了下层实现的细节，只需要用户提供期望的结果就可以了。所有的实现由系统自己完成。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>k8s</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>无法比较的Go结构体</title>
     <link href="/post/go-no-compare-struct.html"/>
     <url>/post/go-no-compare-struct.html</url>
