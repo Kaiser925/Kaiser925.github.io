@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>raft Leader 选举</title>
+    <link href="/post/raft-leader-election.html"/>
+    <url>/post/raft-leader-election.html</url>
+    
+    <content type="html"><![CDATA[<p>raft 协议是当前分布式系统开发的首选共识算法。raft 协议是一个一切以领导者为主，实现一系列值的共识和节点日志的一致性。</p><p>raft 协议将共识问题拆分成三个子问题</p><ol><li>Leader 选举，Leader 故障后集群能快速选出新 Leader；</li><li>日志复制， 集群只有 Leader 能写入日志， Leader 负责复制日志到 Follower 节点，并强制 Follower 节点与自己保持相同；</li><li>安全性，一个任期内集群只能产生一个 Leader、已提交的日志条目在发生 Leader 选举时，一定会存在更高任期的新 Leader 日志中、各个节点的状态机应用的任意位置的日志条目内容应一样等</li></ol><p>首先介绍下 Raft 的 Leader 选举流程</p><p>Leader 是集群中的独裁者，当 Leader 发布 <code>A=3</code> 的命令时，其余的节点都将会追加最新的 <code>A=3</code> 的指令到自身的日志中。</p><p>因此，一个集群中只能有一个 Leader，由唯一的 Leader 发出指令。这里我将会介绍 raft 是如何在一个多节点的集群中选出 Leader 的。</p><h3 id="成员身份"><a href="#成员身份" class="headerlink" title="成员身份"></a>成员身份</h3><p>在介绍选举算法前，先介绍下集群中节点的身份有哪几种。在 raft 集群中，节点的身份有三种，分别是 <strong>Leader</strong>，<strong>Candidate</strong> 和 <strong>Follower</strong>。</p><ul><li><p>Follower:  接收和处理来自 Leader 的信息，当 Leader 的心跳超时时，成为 Candidate</p></li><li><p>Candidate: 向其他节点发送 RequestVote 的 RPC 请求，通知其他节点投票，当得票数超过 2/3 时成为 Leader</p></li><li><p>Leader: 负责处理写请求，管理日志的复制（AppendEntries）和不断发送心跳消息，通知其他节点 Leader 还是存活的</p></li></ul><h3 id="选举过程"><a href="#选举过程" class="headerlink" title="选举过程"></a>选举过程</h3><p>首先，在初始节点，集群的所有节点都是 Follower。每个节点都有一个随机的心跳超时时间。</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">A</span>: <span class="hljs-number">150</span>ms, Term:<span class="hljs-number">0</span><br><span class="hljs-attribute">B</span>: <span class="hljs-number">200</span>ms, Term:<span class="hljs-number">0</span><br><span class="hljs-attribute">C</span>: <span class="hljs-number">250</span>ms, Term:<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure><p>A 会最先因为没有等到 Leader 心跳信息而发生超时，此时，A 会将自己的任期（Term）增加 1，成为 Candidate，为自己投一票，然后向其他的节点发送 RequestVote。</p><p>B，C 收到 A 的投票请求，并且它们在没有在 Term1 投过票，那么它们就会给 A 投票，同时将自己的任期加 1.</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">A</span>: <span class="hljs-number">150</span>ms, Term:<span class="hljs-number">1</span><br><span class="hljs-attribute">B</span>: <span class="hljs-number">200</span>ms, Term:<span class="hljs-number">1</span><br><span class="hljs-attribute">C</span>: <span class="hljs-number">250</span>ms, Term:<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure><p>在投票超时时间内（每次投票的超时时间也是随机的），A 获得了半数的投票，A 成为了本届任期的新 Leader。并向其他节点发送心跳消息。</p><h3 id="什么是任期"><a href="#什么是任期" class="headerlink" title="什么是任期"></a>什么是任期</h3><p>raft 将时间划分成一个个任期，任期用连续的整数表示，每个任期从一次选举开始，赢得选举的节点在该任期内充当 Leader 的职责，随着时间的消逝，集群可能会发生新的选举，任期号也会单调递增。</p><p>通过任期号，可以比较各个节点的数据新旧、识别过期的 Leader 等，它在 Raft 算法中充当逻辑时钟，发挥着重要作用。</p><p>Follower 在等待 Leader 心跳信息超时后，推举自己为 Candidate 时，会增加自己的任期号，比如节点 A 的当前任期编号为 0，那么在推举自己为候选人时，会将自己的任期编号增加为 1。</p><p>如果一个服务器节点，发现自己的任期编号比其他节点小，那么它会更新自己的编号到较大的编号值。</p><p>在 raft 中，如果 Candidate 或者 Leader 发现自己的任期小于其他节点（任期过期），那么就会立刻恢复成 Follower。</p><p>如果一个节点接受到了一个任期值较低的请求，那么就会直接拒绝这个请求。</p><h3 id="选举的规则"><a href="#选举的规则" class="headerlink" title="选举的规则"></a>选举的规则</h3><ol><li>在一次选举中，每一个服务器节点最多会对一个任期编号投出一张选票，并且按照“先来先服务”的原则进行投票。</li><li>日志完整性高的 Follower（也就是最后一条日志项对应的任期编号值更大，索引号更大），拒绝投票给日志完整性低的 Candidate</li></ol><p>raft 的日志格式如下</p><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">索引：  1   2   3   4<br>任期：|<span class="hljs-string"> 1 </span>|<span class="hljs-string"> 1 </span>|<span class="hljs-string"> 2 </span>|<span class="hljs-string"> 3 </span>|<br>指令：|<span class="hljs-string">x=1</span>|<span class="hljs-string">y=2</span>|<span class="hljs-string">x=2</span>|<span class="hljs-string">z=4</span>|<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>raft</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>声明式 API</title>
     <link href="/post/declarative-api.html"/>
     <url>/post/declarative-api.html</url>
