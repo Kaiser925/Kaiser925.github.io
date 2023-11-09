@@ -13,25 +13,25 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Kaiser925">
+  <meta name="author" content="Bobby Zhang">
   <meta name="keywords" content="">
   
     <meta name="description" content="介绍当涉及到文件上传时，低内存占用的客户端是非常重要的。在本篇博客中，我们将介绍如何使用Go语言实现一个低内存占用的HTTP文件上传客户端。 流程首先，让我们先讨论一下HTTP文件上传的基本原理。HTTP文件上传是通过POST请求向服务器发送数据的。请求的头部包含文件的元数据，请求的主体则包含文件的二进制数据。由于HTTP请求和响应在网络上传输的过程中可能会被分割成多个小块，因此上传大文件时会占用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 低内存大文件上传">
 <meta property="og:url" content="https://blog.zhangliangliang.cc/post/go-buffer-less-multipart-form.html">
-<meta property="og:site_name" content="Kaiser925&#39;s blogs.">
+<meta property="og:site_name" content="bobbyz3g&#39;s blogs.">
 <meta property="og:description" content="介绍当涉及到文件上传时，低内存占用的客户端是非常重要的。在本篇博客中，我们将介绍如何使用Go语言实现一个低内存占用的HTTP文件上传客户端。 流程首先，让我们先讨论一下HTTP文件上传的基本原理。HTTP文件上传是通过POST请求向服务器发送数据的。请求的头部包含文件的元数据，请求的主体则包含文件的二进制数据。由于HTTP请求和响应在网络上传输的过程中可能会被分割成多个小块，因此上传大文件时会占用">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-02-14T13:42:53.000Z">
 <meta property="article:modified_time" content="2023-03-27T13:40:12.249Z">
-<meta property="article:author" content="Kaiser925">
+<meta property="article:author" content="Bobby Zhang">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Go 低内存大文件上传 - Kaiser925&#39;s blogs.</title>
+  <title>Go 低内存大文件上传 - bobbyz3g&#39;s blogs.</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -95,7 +95,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Kaiser925</strong>
+      <strong>bobbyz3g</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -305,7 +305,7 @@
       
         <div class="license-meta-item">
           <div>作者</div>
-          <div>Kaiser925</div>
+          <div>Bobby Zhang</div>
         </div>
       
       

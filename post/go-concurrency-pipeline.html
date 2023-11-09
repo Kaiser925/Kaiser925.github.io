@@ -13,25 +13,25 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Kaiser925">
+  <meta name="author" content="Bobby Zhang">
   <meta name="keywords" content="">
   
     <meta name="description" content="Go 管道模式开始这片文章是看完 Golang 官方博客后写下，记录下。原文在这里 首先是 What is pipeline？官方博客上将管道看作是并发的程序的一种。一系列的 stage 通过 channel 串联起来。其中，每个 stage 都是一组执行相同任务的 goroutine。在每个 Stage 中，每个 goroutine 都会做三件事情：  通过一个 channel 接收到要处理的上">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 的一种并发模式：管道">
 <meta property="og:url" content="https://blog.zhangliangliang.cc/post/go-concurrency-pipeline.html">
-<meta property="og:site_name" content="Kaiser925&#39;s blogs.">
+<meta property="og:site_name" content="bobbyz3g&#39;s blogs.">
 <meta property="og:description" content="Go 管道模式开始这片文章是看完 Golang 官方博客后写下，记录下。原文在这里 首先是 What is pipeline？官方博客上将管道看作是并发的程序的一种。一系列的 stage 通过 channel 串联起来。其中，每个 stage 都是一组执行相同任务的 goroutine。在每个 Stage 中，每个 goroutine 都会做三件事情：  通过一个 channel 接收到要处理的上">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-01-09T14:40:32.000Z">
 <meta property="article:modified_time" content="2023-03-27T13:40:12.228Z">
-<meta property="article:author" content="Kaiser925">
+<meta property="article:author" content="Bobby Zhang">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Go 的一种并发模式：管道 - Kaiser925&#39;s blogs.</title>
+  <title>Go 的一种并发模式：管道 - bobbyz3g&#39;s blogs.</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -95,7 +95,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Kaiser925</strong>
+      <strong>bobbyz3g</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -325,7 +325,7 @@
       
         <div class="license-meta-item">
           <div>作者</div>
-          <div>Kaiser925</div>
+          <div>Bobby Zhang</div>
         </div>
       
       
