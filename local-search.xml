@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>raft 日志复制</title>
+    <link href="/post/raft-log-replica.html"/>
+    <url>/post/raft-log-replica.html</url>
+    
+    <content type="html"><![CDATA[<p>在上一篇的内容中，我们学习了 raft 的 Leader 选举。在这一篇中，我们将学习 raft 的日志复制。</p><p>在 raft 算法中，副本数据是以日志（Log）的形式存在的。在收到来自客户端的信息后，Leader 会复制日志到 Follower，并 Apply 到状态机。</p><h3 id="日志是什么"><a href="#日志是什么" class="headerlink" title="日志是什么"></a>日志是什么</h3><p>日志是由日志项组成的，每个日志项代表一条数据操作命令。</p><p>日志项的格式分为三个部分，分别是</p><ul><li><p>Index: 日志项的索引，标志日志项在所有日志中的位置。单调并且连续自增</p></li><li><p>Term:  提交日志项的 Leader 的任期</p></li><li><p>Command: 客户端请求的数据变更指令，会交由状态机执行。可以看作是客户端提交的数据</p></li></ul><h3 id="日志是如何复制的"><a href="#日志是如何复制的" class="headerlink" title="日志是如何复制的"></a>日志是如何复制的</h3><p>首先是客户端发起一个数据变更的请求，例如新增一条数据。Leader 收到请求后，追加日志项到日志中，发送 ApplyEntries 的 RPC 信息到 Follower。</p><p>然后，在收到大多数的 Follower 确认的响应后，并 Apply 到状态机。如果没有得到大多数 Follower 的成功响应，那么就会返回错误给客户端。</p><p>最后，对于 Follower 来说，当接受到来自 Leader 的 ApplyEntries 信息后，就会将日志项应用到状态机，而不需要 Leader 再次发送信息要求 Follower 应用日志。Follower 只需通过 ApplyEntries 和心跳消息就能知道当前 Leader 的最大 Index。</p><p>在理想情况下，集群的日志是一致的。但是在网络故障，节点宕机等特殊情况下，集群的节点日志可能出现不一致的情况。此时，raft 算法会通过其他的方式来保证日志的一致性。</p><h3 id="日志一致性的保证"><a href="#日志一致性的保证" class="headerlink" title="日志一致性的保证"></a>日志一致性的保证</h3><p>首先就是 raft 算法的核心，一切以 Leader 为主。Leader 会强制要求 Follower 复制自身的日志。</p><p>当出现日志不一致的情况时，Leader 会找到 Follower 节点上与自己日志相同的最大索引值 IndexA，然后从 IndexA+1 处开始发送日志给 Follower。Follower 在收到信息后，会强制更新覆盖日志。</p><p>Leader 在发送需要复制的日志时，会携带两个变量</p><ul><li>PrevLogEntry：表示当前要复制的日志项，前面一条日志项的索引值</li><li>PrevLogTerm：当前要复制的日志项，前面一条日志项的任期</li></ul><p>Follower 在收到 Leader 的信息后，会检查日志，查看是否有 <code>Index == PrevLogEntry &amp;&amp; Term == PreLogTerm</code> 的日志项。</p><p>如果不存在符合条件的日志项，那么 Follower 就会返回一个错误给 Leader。Leader 会递减需要复制的日志项，重新发送给 Follower。</p><p>一直重复上述过程，直到找到符合条件的 PrevLogEntry 和 PrevLogTerm 日志位点 P‘。</p><p>Leader 根据找到的位点，从 P‘ 后开始发送复制日志的信息，Follower 更新覆盖 P‘ 自身的日志。</p><p>通过这种方式，raft 实现了日志的一致性。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>raft</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>raft Leader 选举</title>
     <link href="/post/raft-leader-election.html"/>
     <url>/post/raft-leader-election.html</url>
