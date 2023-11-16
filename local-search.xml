@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>commands out of sync. Did you run multiple statements at once?</title>
+    <link href="/post/go-driver-conn-issue.html"/>
+    <url>/post/go-driver-conn-issue.html</url>
+    
+    <content type="html"><![CDATA[<p>Go 的 mysql 驱动库 <a href="https://github.com/go-sql-driver/mysql.git">github.com/go-sql-driver/mysql</a> 在连接数据库时，有时会产生一个奇怪的错误</p><figure class="highlight smalltalk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smalltalk"><span class="hljs-comment">&quot;commands out of sync. Did you run multiple statements at once?&quot;</span><br></code></pre></td></tr></table></figure><p>这个错误的字面意思是同一时刻执行了多个 SQL 语句。咋看上会让人感到很迷惑，特别是这个错误有可能发生在数据建立连接时。</p><p>例如下面这段代码也会遇到相同的错误信息:</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> (<br><span class="hljs-string">&quot;database/sql&quot;</span><br><span class="hljs-string">&quot;time&quot;</span><br><br>_ <span class="hljs-string">&quot;github.com/go-sql-driver/mysql&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  db, err := sql.Open(<span class="hljs-string">&quot;mysql&quot;</span>, <span class="hljs-string">&quot;user:password@/dbname&quot;</span>)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err) <span class="hljs-comment">// panic，返回上面的错误</span><br>  &#125;<br>  <span class="hljs-keyword">defer</span> db.Close()<br>  db.Ping()<br>&#125;<br><br></code></pre></td></tr></table></figure><p>在上面这段代码中，我们只是建立连接，还没有执行语句就发生了错误。说明错误产生的原因并不是像错误本身信息描述的那样。</p><p>为了了解这个错误产生的原因，我们打开它的源码，查找错误出现的原因。首先使用 <code>rg </code>  命令从代码中搜索这段文本</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">rg -t go &quot;commands out of sync. Did you run multiple statements at once?&quot;<br></code></pre></td></tr></table></figure><p>根据返回的结果，可以看到这是一个在 <a href="https://github.com/go-sql-driver/mysql/blob/a4c260b40eeb51bd823d8b04d0e0e8d072e56adf/errors.go#L29">errors.go</a> 中预定义好的错误。</p><p>找到这个错误之后，我们来看下这个错误是在哪被使用的。继续查找 <code> ErrPktSyncMul</code> 这个关键字，发现是在 <a href="https://github.com/go-sql-driver/mysql/blob/a4c260b40eeb51bd823d8b04d0e0e8d072e56adf/packets.go#L49">packets.go</a> 中使用的， 代码如下：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mc *mysqlConn)</span></span> readPacket() ([]<span class="hljs-type">byte</span>, <span class="hljs-type">error</span>) &#123;<br>  <span class="hljs-comment">// ...</span><br>  <br>  <span class="hljs-comment">// check packet sync [8 bit]</span><br>  <span class="hljs-keyword">if</span> data[<span class="hljs-number">3</span>] != mc.sequence &#123;<br>    mc.Close()<br>    <span class="hljs-keyword">if</span> data[<span class="hljs-number">3</span>] &gt; mc.sequence &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, ErrPktSyncMul<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, ErrPktSync<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>在这个方法中, 客户端从网络连接中读取了 mysql 服务返回的数据包，发现数据包头的 sync 信息与已经读取的 sequence 不相等，并且大于当前 sequence 的，于是认为产生了多语句执行。</p><p>但是，我们的情况并不是执行语句，而是在一开始建立连接就失败了，继续查看源码，发现在 Open 的时候，驱动会与数据库握手，同时调用 readPacket 从连接中读取数据包。</p><p>猜测是与服务端通信出现了问题，搜索相关的 issue，发现了和我们情况类似的问题 <a href="https://github.com/go-sql-driver/mysql/issues/1038">issue #1038</a>。根据 issue 所描述，<strong>当 mariadb  服务端拒绝与当前客户端通信时就会出现这个错误</strong>。而根据下面的评论，这个错误有可能会因为特定的 mariadb  版本引发，因为 mysql 的服务端实现有 bug。mariadb 的开发者，在<a href="https://github.com/go-sql-driver/mysql/issues/1038#issuecomment-1011499346">评论中</a>回答道问题已经修复了。</p><p>到这里，我们终于弄清了这个错误出现的原因，并不是由于我们执行了多行语句，而是因为我们与服务端的通信被拒绝了，错误信息迷惑了我们。</p><p>因此，当连接 mysql 时出现了这个错误，可以按照下面的方式去排查</p><ol><li>查看 mysql 的服务版本是不是存在 bug 的版本，如果是的，那么就需要升级服务版本</li><li>查看 mysql 是否达到了错误连接数的上限，如果是的，可以修改服务端配置，调大连接数，FLUSH HOSTS， 再尝试重新连接</li></ol>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>MySQL</tag>
+      
+      <tag>Go</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>raft 日志复制</title>
     <link href="/post/raft-log-replica.html"/>
     <url>/post/raft-log-replica.html</url>

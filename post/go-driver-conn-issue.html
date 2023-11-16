@@ -16,22 +16,23 @@
   <meta name="author" content="Bobby Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在上一篇的内容中，我们学习了 raft 的 Leader 选举。在这一篇中，我们将学习 raft 的日志复制。 在 raft 算法中，副本数据是以日志（Log）的形式存在的。在收到来自客户端的信息后，Leader 会复制日志到 Follower，并 Apply 到状态机。 日志是什么日志是由日志项组成的，每个日志项代表一条数据操作命令。 日志项的格式分为三个部分，分别是  Index: 日志项的索">
+    <meta name="description" content="Go 的 mysql 驱动库 github.com&#x2F;go-sql-driver&#x2F;mysql 在连接数据库时，有时会产生一个奇怪的错误 1&quot;commands out of sync. Did you run multiple statements at once?&quot;  这个错误的字面意思是同一时刻执行了多个 SQL 语句。咋看上会让人感到很迷惑，特别是这个错误有可能发生在数据建立">
 <meta property="og:type" content="article">
-<meta property="og:title" content="raft 日志复制">
-<meta property="og:url" content="https://blog.zhangliangliang.cc/post/raft-log-replica.html">
+<meta property="og:title" content="commands out of sync. Did you run multiple statements at once?">
+<meta property="og:url" content="https://blog.zhangliangliang.cc/post/go-driver-conn-issue.html">
 <meta property="og:site_name" content="bobbyz3g&#39;s blogs.">
-<meta property="og:description" content="在上一篇的内容中，我们学习了 raft 的 Leader 选举。在这一篇中，我们将学习 raft 的日志复制。 在 raft 算法中，副本数据是以日志（Log）的形式存在的。在收到来自客户端的信息后，Leader 会复制日志到 Follower，并 Apply 到状态机。 日志是什么日志是由日志项组成的，每个日志项代表一条数据操作命令。 日志项的格式分为三个部分，分别是  Index: 日志项的索">
+<meta property="og:description" content="Go 的 mysql 驱动库 github.com&#x2F;go-sql-driver&#x2F;mysql 在连接数据库时，有时会产生一个奇怪的错误 1&quot;commands out of sync. Did you run multiple statements at once?&quot;  这个错误的字面意思是同一时刻执行了多个 SQL 语句。咋看上会让人感到很迷惑，特别是这个错误有可能发生在数据建立">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-11-13T13:45:44.000Z">
-<meta property="article:modified_time" content="2023-11-13T14:25:47.236Z">
+<meta property="article:published_time" content="2023-11-16T14:19:17.000Z">
+<meta property="article:modified_time" content="2023-11-16T15:08:09.587Z">
 <meta property="article:author" content="Bobby Zhang">
-<meta property="article:tag" content="raft">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>raft 日志复制 - bobbyz3g&#39;s blogs.</title>
+  <title>commands out of sync. Did you run multiple statements at once? - bobbyz3g&#39;s blogs.</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -185,7 +186,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="raft 日志复制"></span>
+            <span id="subtitle" data-typed-text="commands out of sync. Did you run multiple statements at once?"></span>
           
         </div>
 
@@ -196,8 +197,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-13 21:45" pubdate>
-          2023年11月13日 晚上
+        <time datetime="2023-11-16 22:19" pubdate>
+          2023年11月16日 晚上
         </time>
       </span>
     
@@ -209,7 +210,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.2k 字
+          1.5k 字
         
       </span>
     
@@ -221,7 +222,7 @@
         
         
           <!-- compatible with older versions-->
-          4 分钟
+          5 分钟
         
       </span>
     
@@ -259,39 +260,35 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">raft 日志复制</h1>
+            <h1 style="display: none">commands out of sync. Did you run multiple statements at once?</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在上一篇的内容中，我们学习了 raft 的 Leader 选举。在这一篇中，我们将学习 raft 的日志复制。</p>
-<p>在 raft 算法中，副本数据是以日志（Log）的形式存在的。在收到来自客户端的信息后，Leader 会复制日志到 Follower，并 Apply 到状态机。</p>
-<h3 id="日志是什么"><a href="#日志是什么" class="headerlink" title="日志是什么"></a>日志是什么</h3><p>日志是由日志项组成的，每个日志项代表一条数据操作命令。</p>
-<p>日志项的格式分为三个部分，分别是</p>
-<ul>
-<li><p>Index: 日志项的索引，标志日志项在所有日志中的位置。单调并且连续自增</p>
-</li>
-<li><p>Term:  提交日志项的 Leader 的任期</p>
-</li>
-<li><p>Command: 客户端请求的数据变更指令，会交由状态机执行。可以看作是客户端提交的数据</p>
-</li>
-</ul>
-<h3 id="日志是如何复制的"><a href="#日志是如何复制的" class="headerlink" title="日志是如何复制的"></a>日志是如何复制的</h3><p>首先是客户端发起一个数据变更的请求，例如新增一条数据。Leader 收到请求后，追加日志项到日志中，发送 ApplyEntries 的 RPC 信息到 Follower。</p>
-<p>然后，在收到大多数的 Follower 确认的响应后，并 Apply 到状态机。如果没有得到大多数 Follower 的成功响应，那么就会返回错误给客户端。</p>
-<p>最后，对于 Follower 来说，当接受到来自 Leader 的 ApplyEntries 信息后，就会将日志项应用到状态机，而不需要 Leader 再次发送信息要求 Follower 应用日志。Follower 只需通过 ApplyEntries 和心跳消息就能知道当前 Leader 的最大 Index。</p>
-<p>在理想情况下，集群的日志是一致的。但是在网络故障，节点宕机等特殊情况下，集群的节点日志可能出现不一致的情况。此时，raft 算法会通过其他的方式来保证日志的一致性。</p>
-<h3 id="日志一致性的保证"><a href="#日志一致性的保证" class="headerlink" title="日志一致性的保证"></a>日志一致性的保证</h3><p>首先就是 raft 算法的核心，一切以 Leader 为主。Leader 会强制要求 Follower 复制自身的日志。</p>
-<p>当出现日志不一致的情况时，Leader 会找到 Follower 节点上与自己日志相同的最大索引值 IndexA，然后从 IndexA+1 处开始发送日志给 Follower。Follower 在收到信息后，会强制更新覆盖日志。</p>
-<p>Leader 在发送需要复制的日志时，会携带两个变量</p>
-<ul>
-<li>PrevLogEntry：表示当前要复制的日志项，前面一条日志项的索引值</li>
-<li>PrevLogTerm：当前要复制的日志项，前面一条日志项的任期</li>
-</ul>
-<p>Follower 在收到 Leader 的信息后，会检查日志，查看是否有 <code>Index == PrevLogEntry &amp;&amp; Term == PreLogTerm</code> 的日志项。</p>
-<p>如果不存在符合条件的日志项，那么 Follower 就会返回一个错误给 Leader。Leader 会递减需要复制的日志项，重新发送给 Follower。</p>
-<p>一直重复上述过程，直到找到符合条件的 PrevLogEntry 和 PrevLogTerm 日志位点 P‘。</p>
-<p>Leader 根据找到的位点，从 P‘ 后开始发送复制日志的信息，Follower 更新覆盖 P‘ 自身的日志。</p>
-<p>通过这种方式，raft 实现了日志的一致性。</p>
+                <p>Go 的 mysql 驱动库 <a target="_blank" rel="noopener" href="https://github.com/go-sql-driver/mysql.git">github.com/go-sql-driver/mysql</a> 在连接数据库时，有时会产生一个奇怪的错误</p>
+<figure class="highlight smalltalk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smalltalk"><span class="hljs-comment">&quot;commands out of sync. Did you run multiple statements at once?&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>这个错误的字面意思是同一时刻执行了多个 SQL 语句。咋看上会让人感到很迷惑，特别是这个错误有可能发生在数据建立连接时。</p>
+<p>例如下面这段代码也会遇到相同的错误信息:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;database/sql&quot;</span><br>	<span class="hljs-string">&quot;time&quot;</span><br><br>	_ <span class="hljs-string">&quot;github.com/go-sql-driver/mysql&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  db, err := sql.Open(<span class="hljs-string">&quot;mysql&quot;</span>, <span class="hljs-string">&quot;user:password@/dbname&quot;</span>)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err) <span class="hljs-comment">// panic，返回上面的错误</span><br>  &#125;<br>  <span class="hljs-keyword">defer</span> db.Close()<br>  db.Ping()<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>在上面这段代码中，我们只是建立连接，还没有执行语句就发生了错误。说明错误产生的原因并不是像错误本身信息描述的那样。</p>
+<p>为了了解这个错误产生的原因，我们打开它的源码，查找错误出现的原因。首先使用 <code>rg </code>  命令从代码中搜索这段文本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">rg -t go &quot;commands out of sync. Did you run multiple statements at once?&quot;<br></code></pre></td></tr></table></figure>
+
+<p>根据返回的结果，可以看到这是一个在 <a target="_blank" rel="noopener" href="https://github.com/go-sql-driver/mysql/blob/a4c260b40eeb51bd823d8b04d0e0e8d072e56adf/errors.go#L29">errors.go</a> 中预定义好的错误。</p>
+<p>找到这个错误之后，我们来看下这个错误是在哪被使用的。继续查找 <code> ErrPktSyncMul</code> 这个关键字，发现是在 <a target="_blank" rel="noopener" href="https://github.com/go-sql-driver/mysql/blob/a4c260b40eeb51bd823d8b04d0e0e8d072e56adf/packets.go#L49">packets.go</a> 中使用的， 代码如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mc *mysqlConn)</span></span> readPacket() ([]<span class="hljs-type">byte</span>, <span class="hljs-type">error</span>) &#123;<br>  <span class="hljs-comment">// ...</span><br>  <br>  <span class="hljs-comment">// check packet sync [8 bit]</span><br>  <span class="hljs-keyword">if</span> data[<span class="hljs-number">3</span>] != mc.sequence &#123;<br>    mc.Close()<br>    <span class="hljs-keyword">if</span> data[<span class="hljs-number">3</span>] &gt; mc.sequence &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, ErrPktSyncMul<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, ErrPktSync<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在这个方法中, 客户端从网络连接中读取了 mysql 服务返回的数据包，发现数据包头的 sync 信息与已经读取的 sequence 不相等，并且大于当前 sequence 的，于是认为产生了多语句执行。</p>
+<p>但是，我们的情况并不是执行语句，而是在一开始建立连接就失败了，继续查看源码，发现在 Open 的时候，驱动会与数据库握手，同时调用 readPacket 从连接中读取数据包。</p>
+<p>猜测是与服务端通信出现了问题，搜索相关的 issue，发现了和我们情况类似的问题 <a target="_blank" rel="noopener" href="https://github.com/go-sql-driver/mysql/issues/1038">issue #1038</a>。根据 issue 所描述，<strong>当 mariadb  服务端拒绝与当前客户端通信时就会出现这个错误</strong>。而根据下面的评论，这个错误有可能会因为特定的 mariadb  版本引发，因为 mysql 的服务端实现有 bug。mariadb 的开发者，在<a target="_blank" rel="noopener" href="https://github.com/go-sql-driver/mysql/issues/1038#issuecomment-1011499346">评论中</a>回答道问题已经修复了。</p>
+<p>到这里，我们终于弄清了这个错误出现的原因，并不是由于我们执行了多行语句，而是因为我们与服务端的通信被拒绝了，错误信息迷惑了我们。</p>
+<p>因此，当连接 mysql 时出现了这个错误，可以按照下面的方式去排查</p>
+<ol>
+<li>查看 mysql 的服务版本是不是存在 bug 的版本，如果是的，那么就需要升级服务版本</li>
+<li>查看 mysql 是否达到了错误连接数的上限，如果是的，可以修改服务端配置，调大连接数，FLUSH HOSTS， 再尝试重新连接</li>
+</ol>
 
                 
               </div>
@@ -304,7 +301,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/raft/">#raft</a>
+        <a href="/tags/MySQL/">#MySQL</a>
+      
+        <a href="/tags/Go/">#Go</a>
       
     </div>
   
@@ -316,8 +315,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>raft 日志复制</div>
-      <div>https://blog.zhangliangliang.cc/post/raft-log-replica.html</div>
+      <div>commands out of sync. Did you run multiple statements at once?</div>
+      <div>https://blog.zhangliangliang.cc/post/go-driver-conn-issue.html</div>
     </div>
     <div class="license-meta">
       
@@ -329,7 +328,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年11月13日</div>
+          <div>2023年11月16日</div>
         </div>
       
       
@@ -361,18 +360,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/post/go-driver-conn-issue.html" title="commands out of sync. Did you run multiple statements at once?">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">commands out of sync. Did you run multiple statements at once?</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/post/raft-leader-election.html" title="raft Leader 选举">
-                        <span class="hidden-mobile">raft Leader 选举</span>
+                      <a href="/post/raft-log-replica.html" title="raft 日志复制">
+                        <span class="hidden-mobile">raft 日志复制</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
