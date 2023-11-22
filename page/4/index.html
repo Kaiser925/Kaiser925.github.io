@@ -212,6 +212,46 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/post/go-project-setup.html" target="_self">
+          初始化 Go 项目
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/go-project-setup.html" target="_self">
+        <div>
+          初始化项目初始化一个 Go web 项目的步骤。 首先是创建项目的的文件夹，并初始化 go.mod,  假设项目的远端地址为 github.com/someone/someproject.git 123$ mkdir PROJECT_NAME$ cd PROJECT_NAME$ go mod init github.com/someone/someproject  项目的布局结构可以参考 Stan
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-16 14:01" pubdate>
+              2021-11-16
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">#Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/post/linux-fs-hierarchy-standard.html" target="_self">
           linux 文件系统层次标准
         </a>
@@ -559,46 +599,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Network/">#Network</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/post/cgo-memory-free.html" target="_self">
-          cgo 内存释放
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/post/cgo-memory-free.html" target="_self">
-        <div>
-          介绍使用 cgo，Go 可以与 C 语言代码进行交互，但是在使用过程中，如果使用的姿势不对，那么就有可能带来内存泄漏问题。 Go 自带 GC，一般情况下不会发生内存泄漏事件，自带的 GC 会收集不再使用的对象，并将其释放。但是在使用 cgo 时，某些函数会将 C 语言对象分配到 C 的堆上，在 Go 中初始化的 C 对象，是需要显示的调用 C.free() 去释放。官方文档也写明了这一点。在 cg
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-05-17 15:18" pubdate>
-              2020-05-17
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Go/">#Go</a>
             
           </div>
         
