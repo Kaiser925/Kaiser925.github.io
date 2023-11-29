@@ -1,3 +1,4 @@
+https://blog.zhangliangliang.cc/post/tla-conceptual-overview.html
 https://blog.zhangliangliang.cc/post/deconstruction-type-parameters.html
 https://blog.zhangliangliang.cc/post/go-driver-conn-issue.html
 https://blog.zhangliangliang.cc/post/raft-log-replica.html
@@ -81,4 +82,5 @@ https://blog.zhangliangliang.cc/tags/nginx/
 https://blog.zhangliangliang.cc/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/
 https://blog.zhangliangliang.cc/tags/vim/
 https://blog.zhangliangliang.cc/tags/raft/
+https://blog.zhangliangliang.cc/tags/TLA/
 
