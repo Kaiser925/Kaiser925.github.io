@@ -16,22 +16,22 @@
   <meta name="author" content="Bobby Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="假设我们正在为银行构建一项电汇服务。用户可以向其他用户进行转账。作为要求，我们不允许任何可能使用户账户透支或余额降至零以下的转账。在高层次上，代码可能如下所示： 1234def transfer(from, to, amount)  if (from.balance &gt;&#x3D; amount) # guard		from.balance -&#x3D; amount;  # withdraw  	to.ba">
+    <meta name="description" content="假设我们现在正在编写一个提供给外部使用的函数名 Fn 123func Fn(a int)  &amp;#123;	&#x2F;&#x2F; do something&amp;#125;  Fn  接受一个 int 型的值，要求 a 只能是 1, 3 ,5 其中的一个，该如何去限制呢。 最简单的方式就是增加一段判断，在不符合要求时返回错误，就像下面这样。 123456789func IPAddr(a int) error &amp;#123;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TLA+，概念初识">
-<meta property="og:url" content="https://blog.zhangliangliang.cc/post/tla-conceptual-overview.html">
+<meta property="og:title" content="Go 限制函数参数">
+<meta property="og:url" content="https://blog.zhangliangliang.cc/post/limit-param-range-in-go.html">
 <meta property="og:site_name" content="bobbyz3g&#39;s blogs.">
-<meta property="og:description" content="假设我们正在为银行构建一项电汇服务。用户可以向其他用户进行转账。作为要求，我们不允许任何可能使用户账户透支或余额降至零以下的转账。在高层次上，代码可能如下所示： 1234def transfer(from, to, amount)  if (from.balance &gt;&#x3D; amount) # guard		from.balance -&#x3D; amount;  # withdraw  	to.ba">
+<meta property="og:description" content="假设我们现在正在编写一个提供给外部使用的函数名 Fn 123func Fn(a int)  &amp;#123;	&#x2F;&#x2F; do something&amp;#125;  Fn  接受一个 int 型的值，要求 a 只能是 1, 3 ,5 其中的一个，该如何去限制呢。 最简单的方式就是增加一段判断，在不符合要求时返回错误，就像下面这样。 123456789func IPAddr(a int) error &amp;#123;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-11-29T13:41:39.000Z">
-<meta property="article:modified_time" content="2023-11-29T13:55:24.897Z">
+<meta property="article:published_time" content="2023-11-30T14:22:38.000Z">
+<meta property="article:modified_time" content="2023-11-30T15:16:21.925Z">
 <meta property="article:author" content="Bobby Zhang">
-<meta property="article:tag" content="TLA+">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>TLA+，概念初识 - bobbyz3g&#39;s blogs.</title>
+  <title>Go 限制函数参数 - bobbyz3g&#39;s blogs.</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -185,7 +185,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="TLA+，概念初识"></span>
+            <span id="subtitle" data-typed-text="Go 限制函数参数"></span>
           
         </div>
 
@@ -196,8 +196,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-29 21:41" pubdate>
-          2023年11月29日 晚上
+        <time datetime="2023-11-30 22:22" pubdate>
+          2023年11月30日 晚上
         </time>
       </span>
     
@@ -209,7 +209,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.3k 字
+          1.1k 字
         
       </span>
     
@@ -221,7 +221,7 @@
         
         
           <!-- compatible with older versions-->
-          11 分钟
+          4 分钟
         
       </span>
     
@@ -259,62 +259,32 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">TLA+，概念初识</h1>
+            <h1 style="display: none">Go 限制函数参数</h1>
             
             
               <div class="markdown-body">
                 
-                <p>假设我们正在为银行构建一项电汇服务。用户可以向其他用户进行转账。作为要求，我们不允许任何可能使用户账户透支或余额降至零以下的转账。在高层次上，代码可能如下所示：</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs applescript">def transfer(<span class="hljs-keyword">from</span>, <span class="hljs-keyword">to</span>, amount)<br>  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">from</span>.balance &gt;= amount) <span class="hljs-comment"># guard</span><br>		<span class="hljs-keyword">from</span>.balance -= amount;  <span class="hljs-comment"># withdraw</span><br>  	<span class="hljs-keyword">to</span>.balance += amount;   <span class="hljs-comment"># deposit</span><br></code></pre></td></tr></table></figure>
+                <p>假设我们现在正在编写一个提供给外部使用的函数名 <code>Fn</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Fn</span><span class="hljs-params">(a <span class="hljs-type">int</span>)</span></span>  &#123;<br>	<span class="hljs-comment">// do something</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>上面的代码可以满足要求：当你你试图转账超过你拥有的金额，该防护机制将阻止你。</p>
-<p>现在考虑两个变化：</p>
-<ol>
-<li>用户可以同时发起多个转账。</li>
-<li>转账步骤是不可中断的。一个转账可以开始并（可能）完成，而另一个转账仍在进行中。</li>
-</ol>
-<p>这两个改变单独来看都不会引起问题。但两者结合起来可能导致可能的竞争条件：</p>
-<ol>
-<li>Alice 的账户有 6 美元，并向 Bob 发起了两笔转账。转账 X 金额为 3 美元，转账 Y 金额为 4 美元。</li>
-<li>Guard(X) 运行。因为 3 &lt; 6，我们继续执行 Withdraw(X)。</li>
-<li>在 Withdraw(X) 发生之前，Guard(Y) 运行。因为 4 &lt; 6，我们继续执行 Withdraw(Y)。</li>
-<li>两次提款都执行了，从 Alice 的账户中取走了 7 美元，使她的余额变成 -1。</li>
-</ol>
-<p>如果 Withdraw(X) 在 Guard(Y) 之前发生，那么就不会有问题；转账 Y 将会简单失败。这种竞争条件基本上很少出现：大多数情况下，程序会按预期行为并维护我们的属性。只有在特定事件顺序下才会出现 bug。这就是为什么并发错误很难发现。</p>
-<p>这也是为什么它们难以修复。想象一下，如果我们添加了第三个功能，比如在正确的位置加锁来修复 bug。问题是否消失是因为我们解决了它，还是因为我们使它变得更少见了？如果不能探索设计的实际后果，我们就不能保证已经解决了任何问题。</p>
-<p>因此，TLA+ 的目的是通过程序化探索这些设计问题。我们想要为工具提供一个系统和一个要求，它可以告诉我们是否违反了要求。如果可以，那么我们知道需要改变我们的设计。如果不能，我们就可以更有信心地认为我们是正确的。</p>
-<p>TLA+ 的概念架构由三个部分组成.</p>
-<p>首先, 我们需要去描述系统以及它可以做什么. 这被称之为规范(specification, spec).</p>
-<p>我们的设计可能是这样的:</p>
-<ol>
-<li>我们有一组账户. 每个账户都有一个数字, 代码账户余额</li>
-<li>任何账户都可以尝试向其它任何账户转账任意金额的资金</li>
-<li>转账首先检查是否有足够的资金. 如果有, 金额将从第一个账户扣除, 并添加到第二个账户</li>
-<li>转账是不可中断的, 可以同时发生多笔转账</li>
-</ol>
-<p>规范具有一组“行为”，或者说是可能的不同执行方式。对于规范的正确性，每个行为都必须满足我们系统的所有要求或<strong>属性</strong>。”没有账户可以透支” 就是一个属性示例，如果规范的某个行为在一个状态下存在账户余额为负数，就违反了这个属性。其他所有可能的行为没有透支是不重要的。我们正在寻找罕见的设计错误，所以只要有一个违反就足够了。</p>
-<p>“任何账户都不能透支 “是一个不变的属性，是每个行为的每个状态都必须成立的属性。</p>
-<p>一旦我们编写了规范和属性，就可以将它们输入 “模型检查器”(model checker)。模型检查器接收规范，生成每一种可能的行为，并查看它们是否都满足我们的所有属性。如果有一个不满足，它就会返回一个 “错误跟踪”，显示如何重现违规行为。TLA+ 有几种不同的模型检查器，但最常用的是 TLC，它与工具箱捆绑在一起。除非我另有说明，否则当我谈到模型检查器时，我指的就是 TLC。</p>
-<p>现在，我们无法检查所有可能的行为。事实上，由于我们还可以在系统中添加更多账户和转账，因此这些行为的数量是无限的。因此，我们要检查某些限制条件下的所有行为，例如 “三个账户的所有行为，每个账户最多 10 美元，以及两次转账，每次转账最多 10 美元”。我们将这组运行时参数以及我们所做的所有其他模型检查配置称为模型。</p>
-<p>这意味着通过模型并不能保证规格正确。也许只有在参数较大时才会出现错误。但根据经验，我们在规范中发现，大多数错误都出现在很小的范围内：如果一个系统能在 3 个 worker 的情况下工作，那么它也很可能能在 25 个worker的情况下工作。</p>
-<p>那么，这一切在实践中是什么样的呢？让我们来介绍一下电汇的规范，首先是硬编码参数，然后是模型参数化参数。</p>
-<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs livescript">---- MODULE wire ----<br>EXTENDS TLC, Integers<br><br>People == &#123;<span class="hljs-string">&quot;alice&quot;</span>, <span class="hljs-string">&quot;bob&quot;</span>&#125;<br>Money == <span class="hljs-number">1.</span>.<span class="hljs-number">10</span><br>NumTransfers == <span class="hljs-number">2</span><br><br>(* --algorithm wire<br>variables<br>  acct <span class="hljs-string">\in</span> [People -&gt; Money];<br><br>define<br>  NoOverdrafts ==<br>    <span class="hljs-string">\A</span> p <span class="hljs-string">\in</span> People:<br>      acct[p] &gt;= <span class="hljs-number">0</span><br>end define;<br><br>process wire <span class="hljs-string">\in</span> <span class="hljs-number">1.</span>.NumTransfers<br>variable<br>  amnt <span class="hljs-string">\in</span> <span class="hljs-number">1.</span>.<span class="hljs-number">5</span>;<br>  <span class="hljs-keyword">from</span> <span class="hljs-string">\in</span> People;<br>  <span class="hljs-keyword">to</span> <span class="hljs-string">\in</span> People<br>begin<br>  Check:<br>    <span class="hljs-keyword">if</span> acct[<span class="hljs-keyword">from</span>] &gt;= amnt <span class="hljs-keyword">then</span><br>      Withdraw:<br>        acct[<span class="hljs-keyword">from</span>] := acct[<span class="hljs-keyword">from</span>] - amnt;<br>      Deposit:<br>        acct[<span class="hljs-keyword">to</span>] := acct[<span class="hljs-keyword">to</span>] + amnt;<br>    end <span class="hljs-keyword">if</span>;<br>end process;<br>end algorithm; *)<br><br>====<br></code></pre></td></tr></table></figure>
+<p><code>Fn </code> 接受一个 int 型的值，要求 a 只能是 1, 3 ,5 其中的一个，该如何去限制呢。</p>
+<p>最简单的方式就是增加一段判断，在不符合要求时返回错误，就像下面这样。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">IPAddr</span><span class="hljs-params">(a <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">error</span> &#123;<br>  <span class="hljs-keyword">switch</span> a &#123;<br>  <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>:<br>  <span class="hljs-keyword">default</span>:<br>    <span class="hljs-keyword">return</span> errors.New(<span class="hljs-string">&quot;a should be 1,3,5&quot;</span>)<br>  &#125;<br>  <span class="hljs-comment">// do some</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>解释下上面的代码：</p>
-<ul>
-<li>定义使用 <code>==</code></li>
-<li><code>People</code> 和 <code>Money</code> 是集合，是唯一且无序值的集合。编程语言大多使用数组和 map（分别是序列和结构），而集合在规范中的基础性更强。</li>
-<li><code>[People -&gt; Money]</code> 也是一个集合（这里是函数集合）。它代表了所有可能的人与钱的分配：Alice 有 5 美元，Bob 有 1 美元；Alice 有 10 美元，Bob 有 6 美元，等等。</li>
-<li>变量 <code>acct</code> 并不是一个固定值，而是 100 个不同值中的一个，<code>[People -&gt; Money]</code> 的每个元素都有一个。当我们对此进行建模检查时，TLC 将从这 100 个可能的初始值中的每一个开始，探索每一种可能的行为。</li>
-<li><code>NoOverdrafts</code> 是一个量词(<a target="_blank" rel="noopener" href="https://learntla.com/core/invariants.html#a">quantifier</a>)。如果每个账户都 &gt;= 0，则为 true，否则为 false。在 Python 中，这可能等同于 <code>all([acct[p] &gt;= 0 for p in People])</code>。量词是 TLA+ 的一个非常强大的功能，可以轻松编写非常复杂的属性。</li>
-<li>我们有多个转账进程同时运行。当 <code>NumTransfers == 2</code> 时，规格中有两个进程。但如果我们愿意，可以选择十个、一百个或一千个进程，限制因素只有我们的耐心和内存。</li>
-<li>算法的每一步都属于一个单独的标签(label)。标签决定了哪些是原子发生的，哪些是可以被其他进程打断的。这样，我们就可以表示竞赛条件。</li>
-</ul>
-<p>设计完成后，我们可以根据一些要求对其进行模型检查。我们可以建立一个模型，然后说 “NoOverdrafts “是一个不变量。然后，运行模型将检查系统演化的每一种可能方式。如果其中任何一种方式导致 NoOverdrafts 为 false，那么模型检查程序就会引发错误。</p>
-<p>我们用两次转账进行了检查。但如果我们想用四次转印来检查呢？TLA+ 可以让我们轻松改变设计。我们可以设置任何参数值，然后让不同的模型使用不同的值进行检查。</p>
-<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-comment">---- MODULE wire ----</span><br> EXTENDS TLC, Integers<br><span class="hljs-deletion">-</span><br><span class="hljs-deletion">-People == &#123;&quot;alice&quot;, &quot;bob&quot;&#125;</span><br><span class="hljs-deletion">-Money == 1..10</span><br><span class="hljs-deletion">-NumTransfers == 2</span><br><span class="hljs-addition">+CONSTANTS People, Money, NumTransfers</span><br> <br> (* --algorithm wire<br> variables<br></code></pre></td></tr></table></figure>
+<p>但是这样的处理不仅只能在运行时检查，而且新增了错误返回，外部调用时需要检查 err。我们不喜欢 <code>if err != nil &#123;&#125;</code>, 也不想在新增一种情况时，就在 case 后面新增一个值，直到它变成一条贪吃蛇。</p>
+<p>那有没有什么办法能够在编译时就能检查出给定的值是否符合要求。</p>
+<p>答案是有的，就像下面这段代码这样:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> enum <span class="hljs-keyword">struct</span> &#123;<br>  i <span class="hljs-type">int</span><br>&#125;<br><br><span class="hljs-keyword">var</span> (<br>  One = enum&#123;<span class="hljs-number">1</span>&#125;<br>  Three = enum&#123;<span class="hljs-number">3</span>&#125;<br>  Five = enum&#123;<span class="hljs-number">5</span>&#125;<br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Fn</span><span class="hljs-params">(a enum)</span></span>  &#123;<br>	<span class="hljs-comment">// do something</span><br>  <span class="hljs-comment">// a.i</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>现在，我可以制作不同的模型，具有相同的不变量，但同时转账的次数不同。因此，我可以看到它在一次转账时工作正常，但在两次转账时就不正常了。</p>
+<p>在上面的代码中，我们定义了一个私有的类型 <code>enum</code>, 将 Fn 的参数类型设置为它。同时定义了 <code>One</code>, <code>Three</code>, <code>Five</code> 三个变量来代表 1， 3，5 这三个值，在 Fn 中获取 enum.i 来获取对应的值。</p>
+<p>由于 <code>enum</code> 是私有类型，在外部不可以使用，在调用 Fn 时只能使用我们定义好的  <code>One</code>, <code>Three</code>, <code>Five</code>  来传递参数。通过这种方式，我们将函数的参数的范围限制在了 我们想要的范围内，同时避免了增加额外的逻辑判断。在编译时就能确定调用的方式是否正确。</p>
+<p>可能你想问，这里为什么将 <code>enum</code> 定义为 struct， 而不是 int 的衍生类型。这是因为，如果我们将 <code>enum</code> 定义为 int ，调用方是可以通过直接传递字面量来绕过我们的限制的。就像下面这样</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> enum2 <span class="hljs-type">int</span><br><br><span class="hljs-keyword">var</span> EOne enum2 = <span class="hljs-number">1</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Fn2</span><span class="hljs-params">(a enum2)</span></span> &#123;<br>	Fn2(EOne)<br>	Fn2(<span class="hljs-number">7</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>运行这段代码，会打印出</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">1<br>7<br></code></pre></td></tr></table></figure>
+
+<p> 这并不是我们想要的结果，因此我们将 enum 定义为 struct， 而不是 int，从而防止调用方通过传递字面量的方式来绕过我们的检查。</p>
 
                 
               </div>
@@ -327,7 +297,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/TLA/">#TLA+</a>
+        <a href="/tags/Go/">#Go</a>
       
     </div>
   
@@ -339,8 +309,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>TLA+，概念初识</div>
-      <div>https://blog.zhangliangliang.cc/post/tla-conceptual-overview.html</div>
+      <div>Go 限制函数参数</div>
+      <div>https://blog.zhangliangliang.cc/post/limit-param-range-in-go.html</div>
     </div>
     <div class="license-meta">
       
@@ -352,7 +322,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年11月29日</div>
+          <div>2023年11月30日</div>
         </div>
       
       
@@ -384,18 +354,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/post/limit-param-range-in-go.html" title="Go 限制函数参数">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go 限制函数参数</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/post/deconstruction-type-parameters.html" title="解构类型参数">
-                        <span class="hidden-mobile">解构类型参数</span>
+                      <a href="/post/tla-conceptual-overview.html" title="TLA+，概念初识">
+                        <span class="hidden-mobile">TLA+，概念初识</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
