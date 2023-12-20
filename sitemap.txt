@@ -1,3 +1,4 @@
+https://blog.zhangliangliang.cc/post/finding-unreachable-functions-with-deadcode.html
 https://blog.zhangliangliang.cc/post/tla-operator-and-values.html
 https://blog.zhangliangliang.cc/post/limit-param-range-in-go.html
 https://blog.zhangliangliang.cc/post/tla-conceptual-overview.html
