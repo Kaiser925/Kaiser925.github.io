@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>搭建一个 Gemini 聊天网页</title>
+    <link href="/post/build-own-gemini-chat.html"/>
+    <url>/post/build-own-gemini-chat.html</url>
+    
+    <content type="html"><![CDATA[<p>Google 发布了新的 Gemini Pro 模型，一个对标 openAI 的产品。我们除了可以通过使用英文版的 Bard 来尝试这个新的模型，也可以通过 Google AI 实验室来构建自己的 AI 应用。</p><p>在这篇文章中，我记录了如何搭建一个属于自己的聊天机器人。</p><p><strong>事前准备：</strong></p><p><strong>1. 需要能够访问 Google，并且拥有 Google 账户。</strong></p><p><strong>2. docker 环境</strong></p><p>首先，登录 Google AI 实验室的<a href="https://makersuite.google.com/">首页</a>，进入后，使用自己的 Google 账户登录即可。</p><p>完成登录后，点击页面左侧的 <em>Get API key</em> 去创建一个新的 API Key。如果之前没有使用过，直接点击 <em>Create API key in new project</em> 生成新的 Key 即可。</p><p>稍等片刻，就能看到新生成的 Key 了。</p><p>接下来就是准备站点的页面了，我们这里使用开源的 <a href="https://github.com/babaohuang/GeminiProChat">GeminiProChat</a> 来做为前端页面。</p><p>根据项目的官方文档，我们直接选择使用 docker 来进行本地部署。只需要运行下面的命令即可:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run --name geminiprochat \<br>--restart always \<br>-p 3000:3000 \<br>-itd \<br>-e GEMINI_API_KEY=&lt;your_api_key_here&gt; \<br>-e SITE_PASSWORD=&lt;you_site_password&gt; \<br>babaohuang/geminiprochat:latest<br></code></pre></td></tr></table></figure><p>这里我们预设了一个站点密码，只有输入正确的密码才可以访问，防止别人恶意访问链接。</p><p>运行之后，在本地访问 localhost:3000 即可了。</p><p>如果你是在自己的服务器上部署，并且希望通过 nginx 代理服务，那么就需要在 nginx 的配置中加入下面的配置：</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">server</span> &#123;<br>  <span class="hljs-comment"># 将 80 替换成需要的地址</span><br><span class="hljs-attribute">listen</span> <span class="hljs-number">80</span> default_server;<br><span class="hljs-attribute">listen</span> [::]:<span class="hljs-number">80</span> default_server;<br><span class="hljs-section">location</span> / &#123;<br>        <span class="hljs-attribute">proxy_pass</span> http://localhost:3000;<br>        <span class="hljs-attribute">proxy_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;<br>        <span class="hljs-attribute">proxy_set_header</span> Upgrade <span class="hljs-variable">$http_upgrade</span>;<br>        <span class="hljs-attribute">proxy_set_header</span> Connection <span class="hljs-string">&#x27;upgrade&#x27;</span>;<br>        <span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$host</span>;<br>        <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;<br>        <span class="hljs-attribute">proxy_cache_bypass</span> <span class="hljs-variable">$http_upgrade</span>; <span class="hljs-comment"># 如果不需要流式响应，可以不加这项配置</span><br><span class="hljs-attribute">proxy_buffering</span> <span class="hljs-literal">off</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>更新配置后，重新加载 nginx 就可以生效了。</p><p>到这里，你就完成了一个属于自身的 Gemini 聊天网页了。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>日常</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>MySQL 事务隔离</title>
     <link href="/post/mysql-transaction-isolation.html"/>
     <url>/post/mysql-transaction-isolation.html</url>
