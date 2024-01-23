@@ -16,22 +16,22 @@
   <meta name="author" content="Bobby Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Google 发布了新的 Gemini Pro 模型，一个对标 openAI 的产品。我们除了可以通过使用英文版的 Bard 来尝试这个新的模型，也可以通过 Google AI 实验室来构建自己的 AI 应用。 在这篇文章中，我记录了如何搭建一个属于自己的聊天机器人。 事前准备： 1. 需要能够访问 Google，并且拥有 Google 账户。 2. docker 环境 首先，登录 Google">
+    <meta name="description" content="在 posix 系统中，我们可以使用 | 来连接两个命令，从而将前一个命令的标准输出作为后一个命令的标准输入，就像下面这个例子一样 1ls | grep go  我们首先使用 ls 命令获取到当前目录的文件，然后将输出传递给 grep 命令，从文件列表中过滤带有 go 的文件。 那么我们可以在 Go 实现类似管道的操作吗，将多个 Cmd 连接起来。答案是可以的，并且十分的简单，只需使用标准库的能力">
 <meta property="og:type" content="article">
-<meta property="og:title" content="搭建一个 Gemini 聊天网页">
-<meta property="og:url" content="https://blog.zhangliangliang.cc/post/build-own-gemini-chat.html">
+<meta property="og:title" content="Go 使用管道连接 Command">
+<meta property="og:url" content="https://blog.zhangliangliang.cc/post/go-command-pipe.html">
 <meta property="og:site_name" content="bobbyz3g&#39;s blogs.">
-<meta property="og:description" content="Google 发布了新的 Gemini Pro 模型，一个对标 openAI 的产品。我们除了可以通过使用英文版的 Bard 来尝试这个新的模型，也可以通过 Google AI 实验室来构建自己的 AI 应用。 在这篇文章中，我记录了如何搭建一个属于自己的聊天机器人。 事前准备： 1. 需要能够访问 Google，并且拥有 Google 账户。 2. docker 环境 首先，登录 Google">
+<meta property="og:description" content="在 posix 系统中，我们可以使用 | 来连接两个命令，从而将前一个命令的标准输出作为后一个命令的标准输入，就像下面这个例子一样 1ls | grep go  我们首先使用 ls 命令获取到当前目录的文件，然后将输出传递给 grep 命令，从文件列表中过滤带有 go 的文件。 那么我们可以在 Go 实现类似管道的操作吗，将多个 Cmd 连接起来。答案是可以的，并且十分的简单，只需使用标准库的能力">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-01-12T12:50:12.000Z">
-<meta property="article:modified_time" content="2024-01-12T13:21:59.228Z">
+<meta property="article:published_time" content="2024-01-23T13:50:50.000Z">
+<meta property="article:modified_time" content="2024-01-23T14:17:00.484Z">
 <meta property="article:author" content="Bobby Zhang">
-<meta property="article:tag" content="日常">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>搭建一个 Gemini 聊天网页 - bobbyz3g&#39;s blogs.</title>
+  <title>Go 使用管道连接 Command - bobbyz3g&#39;s blogs.</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -185,7 +185,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="搭建一个 Gemini 聊天网页"></span>
+            <span id="subtitle" data-typed-text="Go 使用管道连接 Command"></span>
           
         </div>
 
@@ -196,8 +196,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-01-12 20:50" pubdate>
-          2024年1月12日 晚上
+        <time datetime="2024-01-23 21:50" pubdate>
+          2024年1月23日 晚上
         </time>
       </span>
     
@@ -209,7 +209,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.2k 字
+          2.1k 字
         
       </span>
     
@@ -221,7 +221,7 @@
         
         
           <!-- compatible with older versions-->
-          4 分钟
+          7 分钟
         
       </span>
     
@@ -259,30 +259,34 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">搭建一个 Gemini 聊天网页</h1>
+            <h1 style="display: none">Go 使用管道连接 Command</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Google 发布了新的 Gemini Pro 模型，一个对标 openAI 的产品。我们除了可以通过使用英文版的 Bard 来尝试这个新的模型，也可以通过 Google AI 实验室来构建自己的 AI 应用。</p>
-<p>在这篇文章中，我记录了如何搭建一个属于自己的聊天机器人。</p>
-<p><strong>事前准备：</strong></p>
-<p><strong>1. 需要能够访问 Google，并且拥有 Google 账户。</strong></p>
-<p><strong>2. docker 环境</strong></p>
-<p>首先，登录 Google AI 实验室的<a target="_blank" rel="noopener" href="https://makersuite.google.com/">首页</a>，进入后，使用自己的 Google 账户登录即可。</p>
-<p>完成登录后，点击页面左侧的 <em>Get API key</em> 去创建一个新的 API Key。如果之前没有使用过，直接点击 <em>Create API key in new project</em> 生成新的 Key 即可。</p>
-<p>稍等片刻，就能看到新生成的 Key 了。</p>
-<p>接下来就是准备站点的页面了，我们这里使用开源的 <a target="_blank" rel="noopener" href="https://github.com/babaohuang/GeminiProChat">GeminiProChat</a> 来做为前端页面。</p>
-<p>根据项目的官方文档，我们直接选择使用 docker 来进行本地部署。只需要运行下面的命令即可:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run --name geminiprochat \<br>--restart always \<br>-p 3000:3000 \<br>-itd \<br>-e GEMINI_API_KEY=&lt;your_api_key_here&gt; \<br>-e SITE_PASSWORD=&lt;you_site_password&gt; \<br>babaohuang/geminiprochat:latest<br></code></pre></td></tr></table></figure>
+                <p>在 posix 系统中，我们可以使用 <code>|</code> 来连接两个命令，从而将前一个命令的标准输出作为后一个命令的标准输入，就像下面这个例子一样</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> | grep go<br></code></pre></td></tr></table></figure>
 
-<p>这里我们预设了一个站点密码，只有输入正确的密码才可以访问，防止别人恶意访问链接。</p>
-<p>运行之后，在本地访问 localhost:3000 即可了。</p>
-<p>如果你是在自己的服务器上部署，并且希望通过 nginx 代理服务，那么就需要在 nginx 的配置中加入下面的配置：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">server</span> &#123;<br>  <span class="hljs-comment"># 将 80 替换成需要的地址</span><br>	<span class="hljs-attribute">listen</span> <span class="hljs-number">80</span> default_server;<br>	<span class="hljs-attribute">listen</span> [::]:<span class="hljs-number">80</span> default_server;<br>	<span class="hljs-section">location</span> / &#123;<br>        	<span class="hljs-attribute">proxy_pass</span> http://localhost:3000;<br>        	<span class="hljs-attribute">proxy_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;<br>        	<span class="hljs-attribute">proxy_set_header</span> Upgrade <span class="hljs-variable">$http_upgrade</span>;<br>        	<span class="hljs-attribute">proxy_set_header</span> Connection <span class="hljs-string">&#x27;upgrade&#x27;</span>;<br>        	<span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$host</span>;<br>        	<span class="hljs-attribute">proxy_set_header</span> X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;<br>        	<span class="hljs-attribute">proxy_cache_bypass</span> <span class="hljs-variable">$http_upgrade</span>; <span class="hljs-comment"># 如果不需要流式响应，可以不加这项配置</span><br>		<span class="hljs-attribute">proxy_buffering</span> <span class="hljs-literal">off</span>;<br>    	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>我们首先使用 <code>ls</code> 命令获取到当前目录的文件，然后将输出传递给 <code>grep</code> 命令，从文件列表中过滤带有 go 的文件。</p>
+<p>那么我们可以在 Go 实现类似管道的操作吗，将多个 Cmd 连接起来。答案是可以的，并且十分的简单，只需使用标准库的能力就可以做到。</p>
+<p>首先，我们需要定义两个 <code>exec.Cmd</code> 对象，分别代表 ls 和 grep 命令。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">ls := exec.Command(<span class="hljs-string">&quot;ls&quot;</span>)<br>grep := exec.Command(<span class="hljs-string">&quot;grep&quot;</span>, <span class="hljs-string">&quot;go&quot;</span>)<br></code></pre></td></tr></table></figure>
 
-<p>更新配置后，重新加载 nginx 就可以生效了。</p>
-<p>到这里，你就完成了一个属于自身的 Gemini 聊天网页了。</p>
+<p>然后就是定义一个方法，将这两个命令连接到一起，并将结果输出到标准输出中。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">pipeCommand</span><span class="hljs-params">(cmdA *exec.Cmd, cmdB *exec.Cmd)</span></span> &#123;<br>	stdout, err := cmdA.StdoutPipe()<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Fprint(os.Stderr, err.Error())<br>		<span class="hljs-keyword">return</span><br>	&#125;<br>	<span class="hljs-keyword">if</span> err := cmdA.Start(); err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Fprint(os.Stderr, err.Error())<br>		<span class="hljs-keyword">return</span><br>	&#125;<br><br>	cmdB.Stdin = stdout<br>	cmdB.Stdout = os.Stdout<br>	cmdB.Stderr = os.Stderr<br>	<span class="hljs-keyword">if</span> err := cmdB.Start(); err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Fprint(os.Stderr, err.Error())<br>		<span class="hljs-keyword">return</span><br>	&#125;<br><br>	<span class="hljs-keyword">if</span> err := cmdA.Wait(); err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Fprint(os.Stderr, err.Error())<br>		<span class="hljs-keyword">return</span><br>	&#125;<br><br>	<span class="hljs-keyword">if</span> err := cmdB.Wait(); err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Fprint(os.Stderr, err.Error())<br>		<span class="hljs-keyword">return</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在这个方法中，我们先调用 StdoutPipe 方法获取到 cmdA 的标准输出流，然后开始执行 cmdA。</p>
+<p>接下来我们将 A 的标准输出流设置为 B 的标准输入，并设置 B 的输出流以及错误流，完成后，同样开始启动 B。此时 B 会从 stdin 中读取数据，如果没有数据，则会等待，但 Start() 方法不会阻塞。因此程序可以正常往下走。</p>
+<p>在这之后，我们等待 A 命令执行完成，并关闭输出流，从而通知 B 以及没有更多的输入了。</p>
+<p>最后我们再等待 B 命令完成，就可以在控制台看到相关的输出了。</p>
+<p>需要注意的是，我们要在等待 A 完成前启动 B，否则在启动时就会返回错误，提示</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sas">(standard <span class="hljs-keyword">input</span>): Bad <span class="hljs-keyword">file</span> descriptor<br></code></pre></td></tr></table></figure>
+
+<p>这是因为，A 完成之后，就会关闭输出流了，此时 B 就无法获取到正确的输入流了，于是就返回了上面的错误。</p>
+<p>到这里，我们就在 Go 中实现了 bash 中的 pipe 操作了。</p>
+<p>完整代码为</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;os&quot;</span><br>	<span class="hljs-string">&quot;os/exec&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">pipeCommand</span><span class="hljs-params">(cmdA *exec.Cmd, cmdB *exec.Cmd)</span></span> &#123;<br>	stdout, err := cmdA.StdoutPipe()<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Fprint(os.Stderr, err.Error())<br>		<span class="hljs-keyword">return</span><br>	&#125;<br>	<span class="hljs-keyword">if</span> err := cmdA.Start(); err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Fprint(os.Stderr, err.Error())<br>		<span class="hljs-keyword">return</span><br>	&#125;<br><br>	cmdB.Stdin = stdout<br>	cmdB.Stdout = os.Stdout<br>	cmdB.Stderr = os.Stderr<br>	<span class="hljs-keyword">if</span> err := cmdB.Start(); err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Fprint(os.Stderr, err.Error())<br>		<span class="hljs-keyword">return</span><br>	&#125;<br><br>	<span class="hljs-keyword">if</span> err := cmdA.Wait(); err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Fprint(os.Stderr, err.Error())<br>		<span class="hljs-keyword">return</span><br>	&#125;<br><br>	<span class="hljs-keyword">if</span> err := cmdB.Wait(); err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Fprint(os.Stderr, err.Error())<br>		<span class="hljs-keyword">return</span><br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	ls := exec.Command(<span class="hljs-string">&quot;ls&quot;</span>)<br>	grep := exec.Command(<span class="hljs-string">&quot;grep&quot;</span>, <span class="hljs-string">&quot;go&quot;</span>)<br>	pipeCommand(ls, grep)<br>&#125;<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -295,7 +299,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%97%A5%E5%B8%B8/">#日常</a>
+        <a href="/tags/Go/">#Go</a>
       
     </div>
   
@@ -307,8 +311,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>搭建一个 Gemini 聊天网页</div>
-      <div>https://blog.zhangliangliang.cc/post/build-own-gemini-chat.html</div>
+      <div>Go 使用管道连接 Command</div>
+      <div>https://blog.zhangliangliang.cc/post/go-command-pipe.html</div>
     </div>
     <div class="license-meta">
       
@@ -320,7 +324,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年1月12日</div>
+          <div>2024年1月23日</div>
         </div>
       
       
@@ -352,18 +356,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/post/go-command-pipe.html" title="Go 使用管道连接 Command">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go 使用管道连接 Command</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/post/mysql-transaction-isolation.html" title="MySQL 事务隔离">
-                        <span class="hidden-mobile">MySQL 事务隔离</span>
+                      <a href="/post/build-own-gemini-chat.html" title="搭建一个 Gemini 聊天网页">
+                        <span class="hidden-mobile">搭建一个 Gemini 聊天网页</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

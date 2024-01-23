@@ -1,3 +1,4 @@
+https://blog.zhangliangliang.cc/post/go-command-pipe.html
 https://blog.zhangliangliang.cc/post/build-own-gemini-chat.html
 https://blog.zhangliangliang.cc/post/mysql-transaction-isolation.html
 https://blog.zhangliangliang.cc/post/go-errors-are-value.html
