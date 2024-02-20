@@ -1,3 +1,4 @@
+https://blog.zhangliangliang.cc/post/etcd-cluster-operation-guide.html
 https://blog.zhangliangliang.cc/post/go-command-pipe.html
 https://blog.zhangliangliang.cc/post/build-own-gemini-chat.html
 https://blog.zhangliangliang.cc/post/mysql-transaction-isolation.html
@@ -90,4 +91,6 @@ https://blog.zhangliangliang.cc/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/
 https://blog.zhangliangliang.cc/tags/vim/
 https://blog.zhangliangliang.cc/tags/raft/
 https://blog.zhangliangliang.cc/tags/TLA/
+https://blog.zhangliangliang.cc/tags/etcd/
+https://blog.zhangliangliang.cc/tags/operations/
 
