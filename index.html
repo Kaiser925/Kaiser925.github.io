@@ -212,6 +212,46 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/post/go-slice-usage-and-internal.html" target="_self">
+          Go 切片的使用和内部实现
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/go-slice-usage-and-internal.html" target="_self">
+        <div>
+          本文是翻译自 Go 官方的博客 Go Slices: usage and internals 介绍Go 的切片类型提供了一种方便高效的方法来处理类型化数据序列。切片类似于其他语言中的数组，但具有一些不寻常的属性。本文将介绍什么是切片以及它们的使用方式 数组切片类型是建立在 Go 的数组类型之上的抽象类型，因此要理解切片，我们必须首先了解数组。 数组类型定义指定长度和元素类型。例如，该类型 [4]i
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-02-27 21:54" pubdate>
+              2024-02-27
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">#Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/post/etcd-cluster-operation-guide.html" target="_self">
           etcd 集群运维
         </a>
@@ -561,46 +601,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/TLA/">#TLA+</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/post/deconstruction-type-parameters.html" target="_self">
-          解构类型参数
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/post/deconstruction-type-parameters.html" target="_self">
-        <div>
-          这篇文章是对 Go 官方博客 Deconstructing Type Parameters 的翻译. 所使用的 Go 版本为 1.21. Slice 包的函数签名slice.Clone 函数非常的简单，它复制了任何类型的 slice 123func Clone[S ~[]E, E any](s S) S &#123;    return append(s[:0:0], s...)&#125;  上
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-11-22 22:27" pubdate>
-              2023-11-22
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Go/">#Go</a>
             
           </div>
         

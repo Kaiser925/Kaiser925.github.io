@@ -212,6 +212,46 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/post/deconstruction-type-parameters.html" target="_self">
+          解构类型参数
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/post/deconstruction-type-parameters.html" target="_self">
+        <div>
+          这篇文章是对 Go 官方博客 Deconstructing Type Parameters 的翻译. 所使用的 Go 版本为 1.21. Slice 包的函数签名slice.Clone 函数非常的简单，它复制了任何类型的 slice 123func Clone[S ~[]E, E any](s S) S &#123;    return append(s[:0:0], s...)&#125;  上
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-22 22:27" pubdate>
+              2023-11-22
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Go/">#Go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/post/go-driver-conn-issue.html" target="_self">
           commands out of sync. Did you run multiple statements at once?
         </a>
@@ -561,46 +601,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/%E9%87%8D%E6%9E%84/">#重构</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/post/handle-error-gracefully.html" target="_self">
-          优雅的处理错误
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/post/handle-error-gracefully.html" target="_self">
-        <div>
-          本文是对 Dave Cheney 博客的翻译， 这里是原文地址 错误只是值我花了很多时间思考在 Go 程序中处理错误的最佳方式。我真的希望有一种单一的方式来处理错误，这样我们就可以像教授数学或字母一样，教授所有的 Go 程序员。 然而，我得出结论，没有一种单一的方式来处理错误。相反，我认为 Go 的错误处理可以归类为三种核心策略。  哨兵错误第一种错误处理方式我称之为哨兵错误 1if err ==
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-03 20:02" pubdate>
-              2023-04-03
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Go/">#Go</a>
             
           </div>
         
